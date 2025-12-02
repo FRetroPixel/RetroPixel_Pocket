@@ -24,7 +24,7 @@ git clone https://github.com/FRetroPixel/RetroPixel_Pocket.git RETRO_PIXEL_POCKE
 
 cd RETRO_PIXEL_POCKET
 
-Download the additional source code package from the MEGA drive.(Some package sources are no longer available, or the source code modified for some compatible machines has not yet been synchronized. Therefore, manual download is required. Sorry.)
+Download the additional source code package from the MEGA drive.(Some package sources are no longer available, or the source code modified for some compatible machines has not yet been synchronized. Therefore, manual download is required.)
 xxxx.url
 
 copy extpackage floader to RETRO_PIXEL_POCKET
