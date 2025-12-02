@@ -97,6 +97,11 @@ S_USED=$(df -h /storage | awk 'NR==2 {print $3}')
 S_TOTAL=$(df -h /storage | awk 'NR==2 {print $2}')
 S_PERCENT="$(echo "$(df /storage | awk 'NR==2{printf "%.1f%%", $3*100/$2}')")"
 
+NAME=RetroPixel
+COREELEC_DEVICE=POCKET
+V_DEVICE=RetroPixel-POCKET
+VERSION=V1.0
+BUILD_ID=6568526762
 
 echo "OPERATING SYSTEM: ${NAME}"
 echo "IMAGE: ${COREELEC_DEVICE}"

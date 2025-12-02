@@ -4,16 +4,12 @@
 # Copyright (C) 2021-present AmberELEC (https://github.com/AmberELEC)
 
 PKG_NAME="linux"
-if [[ "${DEVICE}" =~ RG351 ]]; then
-  PKG_VERSION="96070d6449a733145d85fc9edc28254f50ac3657"
-  PKG_URL="https://github.com/AmberELEC/kernel_rg351/archive/${PKG_VERSION}.tar.gz"
-elif [[ "${DEVICE}" =~ RG552 ]]; then
-  PKG_VERSION="0c15ff851c1d24fac588bd4427bb45b9ab88f452"
-  PKG_URL="https://github.com/AmberELEC/kernel_rg552/archive/${PKG_VERSION}.tar.gz"
-fi
+
+PKG_VERSION="6095faa02fa1b245a83c30d7a4097f8f354ddc32"
+PKG_SITE="file://${OLDPWD}/extpackage/linux-kernel-rppocket"
+PKG_URL="${PKG_SITE}"
 
 PKG_LICENSE="GPL"
-PKG_SITE="http://www.kernel.org"
 PKG_DEPENDS_HOST="ccache:host openssl:host"
 PKG_DEPENDS_TARGET="toolchain linux:host cpio:host kmod:host xz:host wireless-regdb keyutils ${KERNEL_EXTRA_DEPENDS_TARGET}"
 PKG_DEPENDS_INIT="toolchain"
@@ -143,7 +139,7 @@ pre_make_target() {
   then
     rm -rf exfat
   fi
-  mv exfat-linux exfat
+ mv exfat-linux exfat
   sed -i '/source "fs\/fat\/Kconfig"/a source "fs\/exfat\/Kconfig"' Kconfig
   sed -i '/obj-$(CONFIG_FAT_FS).*+= fat\//a obj-$(CONFIG_EXFAT_FS)\t\t+= exfat\/' Makefile
   cd ${PREEXF}
@@ -216,6 +212,7 @@ make_target() {
   # Without that it'll contain only the symbols from the kernel
   kernel_make ${KERNEL_TARGET} ${KERNEL_MAKE_EXTRACMD} modules
 
+
   if [ -n "${KERNEL_UIMAGE_TARGET}" ] ; then
     # determine compression used for kernel image
     KERNEL_UIMAGE_COMP=${KERNEL_UIMAGE_TARGET:7}
@@ -247,6 +244,7 @@ make_target() {
 }
 
 makeinstall_target() {
+	echo "makeinstall_target wlz"
   if [ "${BOOTLOADER}" = "u-boot" ]; then
     mkdir -p ${INSTALL}/usr/share/bootloader
     mkdir -p ${INSTALL}/usr/share/timing_fix
@@ -279,6 +277,7 @@ make_init() {
 }
 
 makeinstall_init() {
+	echo "make install linux"
   if [ -n "${INITRAMFS_MODULES}" ]; then
     mkdir -p ${INSTALL}/etc
     mkdir -p ${INSTALL}/usr/lib/modules
@@ -301,6 +300,19 @@ makeinstall_init() {
 
 post_install() {
   mkdir -p ${INSTALL}/$(get_full_firmware_dir)/
+  #mkdir -p ${INSTALL}/back
+  #mkdir -p ${INSTALL}/a
+   
+	#cp sources/linux/linux-6095faa02fa1b245a83c30d7a4097f8f354ddc32/backapp ${INSTALL}/back
+	#cp sources/linux/linux-6095faa02fa1b245a83c30d7a4097f8f354ddc32/config_backlight.txt ${INSTALL}/back
+	#cp sources/linux/linux-6095faa02fa1b245a83c30d7a4097f8f354ddc32/720x720/battery_0.bmp ${INSTALL}/a
+	#cp sources/linux/linux-6095faa02fa1b245a83c30d7a4097f8f354ddc32/720x720/battery_1.bmp ${INSTALL}/a
+	#cp sources/linux/linux-6095faa02fa1b245a83c30d7a4097f8f354ddc32/720x720/battery_2.bmp ${INSTALL}/a
+	#cp sources/linux/linux-6095faa02fa1b245a83c30d7a4097f8f354ddc32/720x720/battery_3.bmp ${INSTALL}/a
+	#cp sources/linux/linux-6095faa02fa1b245a83c30d7a4097f8f354ddc32/720x720/battery_fail.bmp ${INSTALL}/a
+
+	#chmod 777 ${INSTALL}/back/config_backlight.txt
+	#chmod 777 ${INSTALL}/back/backapp
 
   # regdb and signature is now loaded as firmware by 4.15+
     if grep -q ^CONFIG_CFG80211_REQUIRE_SIGNED_REGDB= ${PKG_BUILD}/.config; then

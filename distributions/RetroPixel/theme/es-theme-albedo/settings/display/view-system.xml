@@ -1,0 +1,219 @@
+<!--
+  Theme: Albedo
+  Author: mluizvitor
+-->
+
+<theme defaultTransition="instant">
+  <formatVersion>7</formatVersion>
+
+  <!-- Carousel Config -->
+  <view name="system">
+
+    <!-- Cards position -->
+    <carousel name="systemcarousel">
+      <origin>0 0</origin>
+      <pos>0 0</pos>
+      <size>0.33333333 1.3</size>
+
+      <logoSize>0.2 1</logoSize>
+      <logoScale>1.375</logoScale>
+      <maxLogoCount>5</maxLogoCount>
+      <logoPos>-0.25 0</logoPos>
+
+      <color>00000000</color>
+
+      <type>vertical_wheel</type>
+      <logoRotation>5</logoRotation>
+      <logoRotationOrigin>-10 0.5</logoRotationOrigin>
+
+      <defaultTransition>instant</defaultTransition>
+      <systemInfoDelay>2000</systemInfoDelay>
+    </carousel>
+
+    <carousel name="systemcarousel" ifSubset="Ratio:5-3">
+      <logoRotation>5</logoRotation>
+      <logoRotationOrigin>-9.5 0.5</logoRotationOrigin>
+    </carousel>
+
+    <!-- System Name -->
+    <text name="systemName" extra="true">
+      <origin>0 0</origin>
+      <pos>0.34375 0.05</pos>      <!-- 480x320 / 165x 16y -->
+
+      <size>0.58333333 ${fontSizeH1}</size>      <!-- 480x320 / 280x -->
+      <size ifSubset="Ratio:4-3">0.6375 ${fontSizeH1}</size>
+      <size ifSubset="Ratio:5-3">0.525 ${fontSizeH1}</size>
+
+      <size ifHelpPrompts="true">0.55 ${fontSizeH1}</size>      <!-- 480x320 / 280x -->
+      <size ifHelpPrompts="true" ifSubset="Ratio:4-3">0.6125 ${fontSizeH1}</size>
+      <size ifHelpPrompts="true" ifSubset="Ratio:5-3">0.48 ${fontSizeH1}</size>
+
+      <color>ffffff</color>
+
+      <text>${system.fullName}</text>
+      <fontPath>${typefaceTitleBold}</fontPath>
+      <fontSize>${fontSizeH1-medium}</fontSize>
+      <fontSize ifSubset="FontSize:small">${fontSizeH1-small}</fontSize>
+      <fontSize ifSubset="FontSize:large">${fontSizeH1-large}</fontSize>
+
+      <lineSpacing>1</lineSpacing>
+      <alignment>left</alignment>
+      <forceUppercase>1</forceUppercase>
+
+      <rotation>90</rotation>
+      <rotationOrigin>0 0.5</rotationOrigin>
+      <zIndex>10</zIndex>
+
+      <storyboard>
+        <animation property="opacity" from="0" to="1" duration="300" mode="EaseOut"/>
+        <animation property="x" from="0.32375" to="0.34375" duration="300" mode="EaseOut"/>
+      </storyboard>
+    </text>
+
+    <!-- Total games per system -->
+    <text name="systemInfo">
+      <origin>0 0</origin>
+      <pos>0.3875 0.05</pos>      <!-- 480x320 / 186x 16y -->
+
+      <size>0.58333333 ${fontSizeH1}</size>      <!-- 480x320 / 280x -->
+      <size ifSubset="Ratio:4-3">0.6375 ${fontSizeH1}</size>
+      <size ifSubset="Ratio:5-3">0.525 ${fontSizeH1}</size>
+
+      <size ifHelpPrompts="true">0.55 ${fontSizeH1}</size>      <!-- 480x320 / 280x -->
+      <size ifHelpPrompts="true" ifSubset="Ratio:4-3">0.6125 ${fontSizeH1}</size>
+      <size ifHelpPrompts="true" ifSubset="Ratio:5-3">0.48 ${fontSizeH1}</size>
+
+      <color>ffffffcc</color>
+
+      <fontSize>${fontSizeBody-medium}</fontSize>
+      <fontSize ifSubset="FontSize:small">${fontSizeBody-small}</fontSize>
+      <fontSize ifSubset="FontSize:large">${fontSizeBody-large}</fontSize>
+      <alignment>left</alignment>
+      <forceUppercase>1</forceUppercase>
+      <fontPath>${typefaceTitleRegular}</fontPath>
+      <lineSpacing>1</lineSpacing>
+
+      <rotation>90</rotation>
+      <rotationOrigin>0 0.5</rotationOrigin>
+      <zIndex>10</zIndex>
+
+      <storyboard>
+        <animation property="opacity" from="0" to="1" duration="1000" mode="EaseOut"/>
+      </storyboard>
+    </text>
+
+    <!-- System Logo -->
+    <image name="logo">
+      <path>./assets/logos/${system.theme}.svg</path>
+    </image>
+
+    <!-- Logo Fallback -->
+    <text name="logoText">
+      <origin>0 0</origin>
+      <fontPath>${typefaceRegular}</fontPath>
+      <fontSize>${fontSizeH2-medium}</fontSize>
+      <fontSize ifSubset="FontSize:small">${fontSizeH2-small}</fontSize>
+      <fontSize ifSubset="FontSize:large">${fontSizeH2-large}</fontSize>
+      <lineSpacing>0.7</lineSpacing>,
+
+      <color>${primaryColorAlt}</color>
+    </text>
+
+    <image name="cover-fallback" extra="true">
+      <path>./assets/background.png</path>
+      <color>121212</color>
+      <size>1 1</size>
+      <origin>0 0</origin>
+      <tile>true</tile>
+      <pos>0 0</pos>      <!-- 480x320 / 344x (center of the remaining space) · center y-->
+      <zIndex>-11</zIndex>
+    </image>
+
+    <!-- System Background -->
+    <image name="cover" extra="true">
+      <path>{random:image}</path>
+      <path>./assets/systems/${system.theme}.webp</path>
+      <size>0 1</size>
+      <origin>0.5 0.5</origin>
+      <pos>0.716666667 0.5</pos>      <!-- 480x320 / 344x (center of the remaining space) · center y-->
+      <zIndex>-10</zIndex>
+
+      <storyboard>
+        <animation property="x" from="0.683333334" to="0.716666667" duration="500" mode="EaseOut"/>
+        <animation property="opacity" from="0" to="1" duration="500" mode="EaseOut"/>
+      </storyboard>
+    </image>
+
+    <image name="cover" extra="true" ifSubset="Background Source:randomBg">
+      <path>{random:image}</path>
+    </image>
+
+    <image name="cover" extra="true" ifSubset="Background Source:customBg">
+      <!-- Select from theme folder -->
+      <path>./customBackground/${system.theme}.png</path>
+      <path>./customBackground/${system.theme}.jpg</path>
+      <path>./customBackground/${system.theme}.jpeg</path>
+      <path>./customBackground/${system.theme}.webp</path>
+
+      <!-- Select from roms folder -->
+      <path>~/roms/custom_backgrounds/${system.theme}.png</path>
+      <path>~/roms/custom_backgrounds/${system.theme}.jpg</path>
+      <path>~/roms/custom_backgrounds/${system.theme}.jpeg</path>
+      <path>~/roms/custom_backgrounds/${system.theme}.webp</path>
+    </image>
+
+    <video name="coverVid" extra="true" ifSubset="Background Source:videoBg">
+      <path>{random}</path>
+      <minSize>1 1</minSize>
+      <origin>0.5 0.5</origin>
+      <pos>0.716666667 0.5</pos>      <!-- 480x320 / 344x (center of the remaining space) · center y-->
+      <delay>1</delay>
+      <zIndex>-9</zIndex>
+
+      <showSnapshotNoVideo>false</showSnapshotNoVideo>
+
+      <storyboard>
+        <animation property="x" from="0.683333334" to="0.716666667" duration="500" mode="EaseOut"/>
+        <animation property="opacity" from="0" to="1" duration="500" mode="EaseOut"/>
+      </storyboard>
+    </video>
+
+    <image name="carouselBackground" extra="true">
+      <path>./assets/ratio32/carousel-bg.png</path>
+      <path ifSubset="Ratio:4-3">./assets/ratio43/carousel-bg.png</path>
+      <path ifSubset="Ratio:5-3">./assets/ratio53/carousel-bg.png</path>
+      <path ifSubset="Ratio:16-9">./assets/ratio169/carousel-bg.png</path>
+
+      <pos>0 0</pos>
+      <origin>0 0</origin>
+      <size>1 1</size>
+
+      <zIndex>0</zIndex>
+    </image>
+
+    <image name="osdBackground" extra="true" ifSubset="StatusBar:statusBattery|statusClock">
+      <path>./assets/ratio32/status-bar.png</path>
+      <path ifSubset="Ratio:4-3">./assets/ratio43/status-bar.png</path>
+      <path ifSubset="Ratio:5-3">./assets/ratio53/status-bar.png</path>
+      <path ifSubset="Ratio:16-9">./assets/ratio169/status-bar.png</path>
+
+      <pos>0 0</pos>
+      <origin>0 0</origin>
+      <size>1 1</size>
+      <zIndex>1</zIndex>
+    </image>
+
+    <image name="osdBackground" extra="true" ifSubset="StatusBar:statusComplete">
+      <path>./assets/ratio32/status-bar-expanded.png</path>
+      <path ifSubset="Ratio:4-3">./assets/ratio43/status-bar-expanded.png</path>
+      <path ifSubset="Ratio:5-3">./assets/ratio53/status-bar-expanded.png</path>
+      <path ifSubset="Ratio:16-9">./assets/ratio169/status-bar-expanded.png</path>
+
+      <pos>0 0</pos>
+      <origin>0 0</origin>
+      <size>1 1</size>
+      <zIndex>1</zIndex>
+    </image>
+
+  </view>
+</theme>

@@ -1,0 +1,12 @@
+diff --git a/include/video_rockchip.h b/include/video_rockchip.h
+
+--- a/include/video_rockchip.h
++++ b/include/video_rockchip.h
+@@ -12,3 +12,5 @@ 
+-	#define DRM_ROCKCHIP_FB_WIDTH		640
+-	#define DRM_ROCKCHIP_FB_HEIGHT	480
++	//#define DRM_ROCKCHIP_FB_WIDTH		640
++	//#define DRM_ROCKCHIP_FB_HEIGHT	480
++	#define DRM_ROCKCHIP_FB_WIDTH		1080
++	#define DRM_ROCKCHIP_FB_HEIGHT	1200
+ 	#define DRM_ROCKCHIP_FB_BPP		VIDEO_BPP32

@@ -2,16 +2,20 @@
 # Copyright (C) 2021-present AmberELEC (https://github.com/AmberELEC)
 
 PKG_NAME="raze"
-PKG_VERSION="ac2e9e96eeac1497013e7b30319d9336d4251abf"
+PKG_VERSION="f47cd643c893f0f4d832d2fc76eb040267cb7632"
 PKG_LICENSE="GPL"
-PKG_SITE="https://github.com/dhwz/Raze"
-PKG_URL="${PKG_SITE}.git"
+#PKG_SITE="https://github.com/dhwz/Raze"
+#PKG_URL="${PKG_SITE}.git"
+
+PKG_SITE="file://${OLDPWD}/extpackage/raze-f47cd643c893f0f4d832d2fc76eb040267cb7632"
+PKG_URL="${PKG_SITE}"
 PKG_DEPENDS_HOST="toolchain zmusic:host libwebp:host"
 PKG_DEPENDS_TARGET="toolchain SDL2 raze:host zmusic libvpx libwebp"
 PKG_LONGDESC="Raze is a fork of Build engine games backed by GZDoom tech and combines Duke Nukem 3D, Blood, Redneck Rampage, Shadow Warrior and Exhumed/Powerslave in a single package."
 PKG_TOOLCHAIN="cmake-make"
 
-if [ ! "${DEVICE}" = "RG351MP" ] && [ ! "${DEVICE}" = "RG552" ]
+#wlz
+if [ ! "${DEVICE}" = "RG351MP" ] && [ ! "${DEVICE}" = "RG552" ] && [ ! "${DEVICE}" = "RPPOCKET" ]
 then
   PKG_PATCH_DIRS="RG351P"
 fi
@@ -55,7 +59,8 @@ makeinstall_target() {
   cp ${PKG_BUILD}/.${TARGET_NAME}/raze ${INSTALL}/usr/bin
 
   mkdir -p ${INSTALL}/usr/config/distribution/raze
-  if [ "${DEVICE}" = "RG351MP" ] || [ "${DEVICE}" = "RG552" ]; then
+  #wlz
+  if [ "${DEVICE}" = "RG351MP" ] || [ "${DEVICE}" = "RG552" ] || [ "${DEVICE}" = "RPPOCKET" ]; then
     cp ${PKG_DIR}/config/RG351MP/* ${INSTALL}/usr/config/distribution/raze
   else
     cp ${PKG_DIR}/config/RG351P/* ${INSTALL}/usr/config/distribution/raze

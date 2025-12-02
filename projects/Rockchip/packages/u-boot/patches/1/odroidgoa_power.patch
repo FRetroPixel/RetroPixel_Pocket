@@ -1,0 +1,8 @@
+diff --git a/board/rockchip/odroidgoa/odroidgoa_power.c b/board/rockchip/odroidgoa/odroidgoa_power.c
+
+--- a/board/rockchip/odroidgoa/odroidgoa_power.c
++++ b/board/rockchip/odroidgoa/odroidgoa_power.c
+@@ -40,2 +40,2 @@ 
+-	if (gpio_get_value(DC_DET_GPIO)) {
++	if (~(gpio_get_value(DC_DET_GPIO))) {
+ 		debug("dc jack is connected\n");

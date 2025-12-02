@@ -570,7 +570,8 @@ init_package_cache() {
 
     # cache packages folder
     find "${ROOT}/${PACKAGES}" -type f -name package.mk 2>/dev/null | sed "s#/package\.mk\$#${_ANCHOR}#" >> "${temp_global}"
-
+		
+		
     _CACHE_PACKAGE_LOCAL="${BUILD}/.cache_package_local"
     _CACHE_PACKAGE_GLOBAL="${BUILD}/.cache_package_global"
     export _CACHE_PACKAGE_LOCAL _CACHE_PACKAGE_GLOBAL

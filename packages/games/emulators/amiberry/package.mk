@@ -18,10 +18,18 @@ pre_configure_target() {
   if [[ "${DEVICE}" =~ RG351 ]]
   then
     AMIBERRY_PLATFORM="PLATFORM=RK3326"
+    
+  elif [[ "${DEVICE}" == RPPOCKET ]]
+  then
+    AMIBERRY_PLATFORM="PLATFORM=RK3326"
+    
   elif [[ "${DEVICE}" == RG552 ]]
   then
     AMIBERRY_PLATFORM="PLATFORM=RK3399"
+    
   fi
+  
+  
 
   sed -i 's/\-O[23]//' Makefile
   unset LDFLAGS

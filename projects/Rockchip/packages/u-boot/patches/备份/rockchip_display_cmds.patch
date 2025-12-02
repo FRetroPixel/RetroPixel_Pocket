@@ -1,0 +1,9 @@
+diff --git a/include/rockchip_display_cmds.h b/include/rockchip_display_cmds.h
+
+--- a/include/rockchip_display_cmds.h
++++ b/include/rockchip_display_cmds.h
+@@ -34,2 +34,3 @@ 
+-#define	LCD_LOGO_SIZE		(2 * 1024 * 1024)
++//#define	LCD_LOGO_SIZE		(2 * 1024 * 1024)
++#define	LCD_LOGO_SIZE		(8 * 1024 * 1024)
+ 

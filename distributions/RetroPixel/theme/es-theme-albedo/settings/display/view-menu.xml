@@ -1,0 +1,114 @@
+<!--
+  Theme: Albedo
+  Author: mluizvitor
+-->
+
+<theme>
+  <formatVersion>7</formatVersion>
+
+  <!-- Menu Settings -->
+  <view name="menu">
+    <menuText name="menutext">
+      <fontPath>${typefaceRegular}</fontPath>
+      <fontSize>${fontSizeBody-medium}</fontSize>
+      <fontSize ifSubset="FontSize:small">${fontSizeBody-small}</fontSize>
+      <fontSize ifSubset="FontSize:large">${fontSizeBody-large}</fontSize>
+
+      <selectedColor>121212</selectedColor>
+      <selectorColor>${primaryColorAlt}</selectorColor>
+
+      <color>${primaryColorLightVariant}</color>
+      <separatorColor>${primaryColorLightVariant}0f</separatorColor>
+    </menuText>
+
+    <menuText name="menufooter">
+      <fontPath>${typefaceRegular}</fontPath>
+      <fontSize>${fontSizeBody2-medium}</fontSize>
+      <fontSize ifSubset="FontSize:small">${fontSizeBody2-small}</fontSize>
+      <fontSize ifSubset="FontSize:large">${fontSizeBody2-large}</fontSize>
+      <color>${primaryColorLightVariant}cc</color>
+    </menuText>
+
+    <menuTextSmall name="menutextsmall">
+      <fontPath>${typefaceRegular}</fontPath>
+      <fontSize>${fontSizeBody2-medium}</fontSize>
+      <fontSize ifSubset="FontSize:small">${fontSizeBody2-small}</fontSize>
+      <fontSize ifSubset="FontSize:large">${fontSizeBody2-large}</fontSize>
+      <color>${primaryColorAlt}</color>
+    </menuTextSmall>
+
+    <menuGroup name="menugroup">
+      <fontPath>${typefaceTitleBold}</fontPath>
+      <fontSize>${fontSizeBody2-medium}</fontSize>
+      <fontSize ifSubset="FontSize:small">${fontSizeBody2-small}</fontSize>
+      <fontSize ifSubset="FontSize:large">${fontSizeBody2-large}</fontSize>
+
+      <color>${primaryColorLightVariant}</color>
+      <separatorColor>${primaryColor}</separatorColor>
+
+      <backgroundColor>${primaryColorDarkVariant}</backgroundColor>
+    </menuGroup>
+
+    <menuText name="menutitle">
+      <fontPath>${typefaceTitleBold}</fontPath>
+      <fontSize>${fontSizeH1-medium}</fontSize>
+      <fontSize ifSubset="FontSize:small">${fontSizeH1-small}</fontSize>
+      <fontSize ifSubset="FontSize:large">${fontSizeH1-large}</fontSize>
+      <color>${primaryColorLightVariant}</color>
+    </menuText>
+
+    <menuBackground name="menubg">
+      <path>./assets/menu.png</path>
+      <fadePath>./assets/fade.png</fadePath>
+      <size>1 1</size>
+    </menuBackground>
+
+    <menuButton name="menubutton">
+      <path>./assets/button-normal.png</path>
+      <filledPath>./assets/button-hover.png</filledPath>
+    </menuButton>
+    
+    <menuSwitch name="menuswitch">
+      <pathOn>./assets/toggle_on=@3.png</pathOn>
+      <pathOff>./assets/toggle_off=@3.png</pathOff>
+    </menuSwitch>
+
+    <menuSwitch name="menuswitch" ifSubset="Ratio:3-2">
+      <pathOn>./assets/toggle_on=@1.png</pathOn>
+      <pathOff>./assets/toggle_off=@1.png</pathOff>
+    </menuSwitch>
+    
+    <menuSwitch name="menuswitch" ifSubset="Ratio:3-2" ifArch="rg351p,amberelec-rg351p">
+      <pathOn>./assets/toggle_on=@0.5.png</pathOn>
+      <pathOff>./assets/toggle_off=@0.5.png</pathOff>
+    </menuSwitch>
+
+    <menuSwitch name="menuswitch" ifSubset="Ratio:4-3">
+      <pathOn>./assets/toggle_on=@2.png</pathOn>
+      <pathOff>./assets/toggle_off=@2.png</pathOff>
+    </menuSwitch>
+
+    <menuTextEdit name="menutextedit">
+      <inactive>./assets/input_inactive.svg</inactive>
+      <active>./assets/input_active.svg</active>
+    </menuTextEdit>
+
+    <menuIcons name="menuicons">
+      <iconSystem>./assets/icons/cog.svg</iconSystem>
+      <iconUpdates>./assets/icons/update.svg</iconUpdates>
+      <iconControllers>./assets/icons/gamepad-round.svg</iconControllers>
+      <iconGames>./assets/icons/gamepad-square.svg</iconGames>
+      <iconUI>./assets/icons/brush.svg</iconUI>
+      <iconSound>./assets/icons/volume-high.svg</iconSound>
+      <iconNetwork>./assets/icons/wifi-strength-3.svg</iconNetwork>
+      <iconScraper>./assets/icons/image.svg</iconScraper>
+      <iconAdvanced>./assets/icons/library-shelves.svg</iconAdvanced>
+      <iconQuit>./assets/icons/exit-to-app.svg</iconQuit>
+      <iconRetroachievements>./assets/icons/trophy.svg</iconRetroachievements>
+      <iconKodi>./assets/icons/kodi.svg</iconKodi>
+      <iconRestart>./assets/icons/restart.svg</iconRestart>
+      <iconShutdown>./assets/icons/power.svg</iconShutdown>
+      <iconFastShutdown>./assets/icons/power.svg</iconFastShutdown>
+    </menuIcons>
+  </view>
+</theme>

@@ -1,0 +1,28 @@
+diff --git a/drivers/video/drm/rockchip_display.c b/drivers/video/drm/rockchip_display.c
+
+--- a//drivers/video/drm/rockchip_display.c
++++ b/drivers/video/drm/rockchip_display.c
+@@ -1046,7 +1046,7 @@ 
+ 		if (!strcmp(env_get("hwrev"), "rg351p")) {
+-			s->logo.width = 320;
+-			s->logo.height = 480;
++			s->logo.width = 1080;
++			s->logo.height = 1200;
+ 		} else {
+-			s->logo.width = 640;
+-			s->logo.height = 480;
++			s->logo.width = 1080;
++			s->logo.height = 1200;
+ 		}
+@@ -1421,7 +1421,7 @@ 
+ 	if (!strcmp(env_get("hwrev"), "rg351p")) {
+-		uc_priv->xsize = 320;
+-		uc_priv->ysize = 480;
++		uc_priv->xsize = 1080;
++		uc_priv->ysize = 1200;
+ 	} else {
+-		uc_priv->xsize = 640;
+-		uc_priv->ysize = 480;
++		uc_priv->xsize = 1080;
++		uc_priv->ysize = 1200;
+ 	}

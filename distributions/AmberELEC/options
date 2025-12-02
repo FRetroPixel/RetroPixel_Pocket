@@ -120,7 +120,8 @@
   GET_HANDLER_SUPPORT="archive git file"
 
 # Partition labels for USB/SD installation media
-  DISTRO_BOOTLABEL="AMBRELC"
+  #DISTRO_BOOTLABEL="AMBRELC"
+  DISTRO_BOOTLABEL="RetroPixel" 
   DISTRO_DISKLABEL="STORAGE"
 
 # Settings package name - blank if not required

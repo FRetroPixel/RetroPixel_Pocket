@@ -17,7 +17,8 @@ unpack() {
   cp -rf ${SOURCES}/ppsspp/ppsspp-${PKG_VERSION}/. ${PKG_BUILD}
 }
 
-if [[ "${DEVICE}" == RG351V ]] || [[ "${DEVICE}" == RG351MP ]]; then
+#wlz
+if [[ "${DEVICE}" == RG351V ]] || [[ "${DEVICE}" == RG351MP ]] || [[ "${DEVICE}" == RPPOCKET ]]; then
   PKG_PATCH_DIRS="RG351MP"
 fi
 

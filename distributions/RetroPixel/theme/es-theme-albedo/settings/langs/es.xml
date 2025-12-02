@@ -1,0 +1,83 @@
+<!--
+  Theme: Albedo
+  Author: mluizvitor
+-->
+
+<theme>
+  <formatVersion>7</formatVersion>
+
+  <variables>
+    <string.settings.yes>Sí</string.settings.yes>
+    <string.settings.no>No</string.settings.no>
+
+    <!-- Settings Titles -->
+    <string.settings.colorSchemeTitle>Color de acento</string.settings.colorSchemeTitle>
+    <string.settings.screenRatio>Formato de pantalla</string.settings.screenRatio>
+    <string.settings.statusBar>Barra de estado</string.settings.statusBar>
+    <string.settings.dateFormat>Formato de fecha</string.settings.dateFormat>
+
+    <string.settings.fontSize>Tamaño de fuente</string.settings.fontSize>
+    <string.settings.fontSize.medium>Medio</string.settings.fontSize.medium>
+    <string.settings.fontSize.small>Pequeño</string.settings.fontSize.small>
+    <string.settings.fontSize.large>Grande</string.settings.fontSize.large>
+
+    <string.settings.backgroundStyle>Superposición de fondo</string.settings.backgroundStyle>
+    <string.settings.backgroundStyle.scanlines>Líneas de exploración</string.settings.backgroundStyle.scanlines>
+    <string.settings.backgroundStyle.clean>Limpio</string.settings.backgroundStyle.clean>
+
+    <string.settings.logoStyle>Estilo de logotipos</string.settings.logoStyle>
+    <string.settings.logoStyle.color>Colorido</string.settings.logoStyle.color>
+    <string.settings.logoStyle.mono>Monocromo</string.settings.logoStyle.mono>
+
+    <string.settings.clock>Reloj</string.settings.clock>
+    <string.settings.battery>Batería</string.settings.battery>
+    <string.settings.hidden>Oculta</string.settings.hidden>
+
+    <string.settings.backgroundEntry>Fuente de fondo de pantalla</string.settings.backgroundEntry>
+    <string.settings.backgroundEntry.defaultBg>Definido por tema</string.settings.backgroundEntry.defaultBg>
+    <string.settings.backgroundEntry.customBg>Personalizado</string.settings.backgroundEntry.customBg>
+    <string.settings.backgroundEntry.videoBg>Video aleatorio</string.settings.backgroundEntry.videoBg>
+    <string.settings.backgroundEntry.randomBg>Captura de pantalla aleatoria</string.settings.backgroundEntry.randomBg>
+
+    <string.settings.gamelistBackgroundStyle>Estilo de fondo de la lista de juegos</string.settings.gamelistBackgroundStyle>
+    <string.settings.gamelistBackgroundStyle.blurred>Borroso</string.settings.gamelistBackgroundStyle.blurred>
+    <string.settings.gamelistBackgroundStyle.normal>Normal</string.settings.gamelistBackgroundStyle.normal>
+    <string.settings.gamelistBackgroundStyle.none>Sin fondo</string.settings.gamelistBackgroundStyle.none>
+
+    <!-- Colors -->
+    <string.settings.color.blue>Azul</string.settings.color.blue>
+    <string.settings.color.purple>Púrpura</string.settings.color.purple>
+    <string.settings.color.pink>Rosado</string.settings.color.pink>
+    <string.settings.color.red>Rojo</string.settings.color.red>
+    <string.settings.color.orange>Naranja</string.settings.color.orange>
+    <string.settings.color.yellow>Amarillo</string.settings.color.yellow>
+    <string.settings.color.green>Verde</string.settings.color.green>
+    <string.settings.color.teal>Turquesa</string.settings.color.teal>
+    <string.settings.color.gray>Gris</string.settings.color.gray>
+    <string.settings.color.beige>Beige</string.settings.color.beige>
+
+    <!-- Interface Texts -->
+    <string.view.detailed.description>Descripción</string.view.detailed.description>
+
+    <!-- Grid Icon Aspect -->
+    <string.settings.gridIconRatio>Proporción de iconos predeterminados</string.settings.gridIconRatio>
+    <string.settings.gridIconRatio.square>Cuadrado</string.settings.gridIconRatio.square>
+    <string.settings.gridIconRatio.tip>Se aplica a los íconos de carpetas y cartuchos (no seleccione este)</string.settings.gridIconRatio.tip>
+
+
+    <string.settings.imageSource>Imagen para ítem de cuadrícula</string.settings.imageSource>
+    <string.settings.videoSource>Instantánea de vídeo</string.settings.videoSource>
+
+    <string.imageSource.thumbnail>Arte de la caja</string.imageSource.thumbnail>
+    <string.imageSource.image>Captura de pantalla</string.imageSource.image>
+    <string.imageSource.marquee>Logotipo del juego</string.imageSource.marquee>
+
+    <string.gridImageStyle>Estilo de imagen de cuadrícula</string.gridImageStyle>
+    <string.gridImageStyle.cover>Cubrir</string.gridImageStyle.cover>
+    <string.gridImageStyle.fit>Adaptar</string.gridImageStyle.fit>
+    <string.gridImageStyle.stretch>Estirar</string.gridImageStyle.stretch>
+
+    <string.default>Por defecto</string.default>
+  </variables>
+
+</theme>

@@ -35,7 +35,22 @@ if [ -n "${SUBDEVICE}" ]; then
   DISK_BASENAME="${DISK_BASENAME}-${SUBDEVICE}"
 fi
 DISK="${DISK_BASENAME}.img"
-
+   echo "$SYSTEM_PART_START"
+     echo "$DISK_START_PADDING" 
+       echo "$SYSTEM_SIZE"
+       echo "$STORAGE_SIZE"
+       echo "$DISK_GPT_PADDING"
+       echo "$TARGET_IMG"
+       echo "$IMAGE_NAME"
+       
+          echo "$SUBDEVICE"
+             echo "$DISK_BASENAME"
+             echo "$BOOTLOADER"
+             
+              echo "$LE_TMP" 
+              echo "$SAVE_ERROR" 
+              
+        #echo "cccccccccccccccccccc"
 # functions
 cleanup() {
   echo -e "image: cleanup...\n"
@@ -68,6 +83,8 @@ sync
 
 # create part1
 echo "image: creating part1..."
+
+ 
 SYSTEM_PART_END=$(( ${SYSTEM_PART_START} + (${SYSTEM_SIZE} * 1024 * 1024 / 512) - 1 ))
 if [ "${DISK_LABEL}" = "gpt" ]; then
   parted -s "${DISK}" -a min unit s mkpart system fat32 ${SYSTEM_PART_START} ${SYSTEM_PART_END}
@@ -168,7 +185,7 @@ EOF
   syslinux.mtools --offset "${OFFSET}" -i "${DISK}"
 
   # copy files
-  echo "image: copying files to part1..."
+  
   mcopy "${TARGET_IMG}/${BUILD_NAME}.kernel" "::/${KERNEL_NAME}"
   mcopy "${TARGET_IMG}/${BUILD_NAME}.system" ::/SYSTEM
   mcopy "${RELEASE_DIR}/target/KERNEL.md5" "::/${KERNEL_NAME}.md5"
@@ -191,6 +208,7 @@ EOF
 
   # copy files
   echo "image: copying files to part1..."
+  
   mcopy "${TARGET_IMG}/${BUILD_NAME}.kernel" "::/${KERNEL_NAME}"
   mcopy "${TARGET_IMG}/${BUILD_NAME}.system" ::/SYSTEM
   mcopy "${RELEASE_DIR}/target/KERNEL.md5" "::/${KERNEL_NAME}.md5"
@@ -202,16 +220,18 @@ EOF
   mcopy "${RELEASE_DIR}/3rdparty/bootloader/config.txt" ::
   mcopy "${RELEASE_DIR}/3rdparty/bootloader/distroconfig.txt" ::
 
+	
   if [ -f "${RELEASE_DIR}/3rdparty/bootloader/dt-blob.bin" ]; then
     mcopy "${RELEASE_DIR}/3rdparty/bootloader/dt-blob.bin" ::
   fi
 
+	
   for dtb in "${RELEASE_DIR}/3rdparty/bootloader/"*.dtb ; do
     if [ -f "${dtb}" ]; then
       mcopy "${dtb}" ::/$(basename "${dtb}")
     fi
   done
-
+	
   if [ -d "${RELEASE_DIR}/3rdparty/bootloader/overlays" ]; then
     mcopy -s "${RELEASE_DIR}/3rdparty/bootloader/overlays" ::
   fi
@@ -222,6 +242,7 @@ elif [ "${BOOTLOADER}" = "u-boot" -a \( -n "${UBOOT_SYSTEM}" -o "${UBOOT_VERSION
 
   if [ "${UBOOT_VERSION}" != "vendor" ]; then
     DTB="$(${SCRIPTS}/uboot_helper ${PROJECT} ${DEVICE} ${UBOOT_SYSTEM} dtb)"
+    
     if [ -f "${RELEASE_DIR}/3rdparty/bootloader/${DTB}" ]; then
       mcopy "${RELEASE_DIR}/3rdparty/bootloader/${DTB}" ::
     fi
@@ -248,6 +269,7 @@ EOF
   fi
 
   echo "image: copying files to part1..."
+  
   mcopy "${TARGET_IMG}/${BUILD_NAME}.kernel" "::/${KERNEL_NAME}"
   mcopy "${TARGET_IMG}/${BUILD_NAME}.system" ::/SYSTEM
   mcopy "${RELEASE_DIR}/target/KERNEL.md5" "::/${KERNEL_NAME}.md5"

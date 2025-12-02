@@ -1,0 +1,83 @@
+<!--
+  Theme: Albedo
+  Author: mluizvitor
+-->
+
+<theme>
+  <formatVersion>7</formatVersion>
+
+  <variables>
+    <string.settings.yes>Sim</string.settings.yes>
+    <string.settings.no>Não</string.settings.no>
+
+    <!-- Settings Titles -->
+    <string.settings.colorSchemeTitle>Cor de destaque</string.settings.colorSchemeTitle>
+    <string.settings.screenRatio>Proporção da tela</string.settings.screenRatio>
+    <string.settings.statusBar>Barra de status</string.settings.statusBar>
+    <string.settings.dateFormat>Formato da data</string.settings.dateFormat>
+
+    <string.settings.fontSize>Tamanho da fonte</string.settings.fontSize>
+    <string.settings.fontSize.medium>Médio</string.settings.fontSize.medium>
+    <string.settings.fontSize.small>Pequeno</string.settings.fontSize.small>
+    <string.settings.fontSize.large>Grande</string.settings.fontSize.large>
+
+    <string.settings.backgroundStyle>Sobreposição do plano de fundo</string.settings.backgroundStyle>
+    <string.settings.backgroundStyle.scanlines>Linhas de varredura</string.settings.backgroundStyle.scanlines>
+    <string.settings.backgroundStyle.clean>Limpo</string.settings.backgroundStyle.clean>
+
+    <string.settings.logoStyle>Estilo dos logos</string.settings.logoStyle>
+    <string.settings.logoStyle.color>Colorido</string.settings.logoStyle.color>
+    <string.settings.logoStyle.mono>Monocromático</string.settings.logoStyle.mono>
+
+    <string.settings.clock>Relógio</string.settings.clock>
+    <string.settings.battery>Bateria</string.settings.battery>
+    <string.settings.hidden>Oculta</string.settings.hidden>
+
+    <string.settings.backgroundEntry>Fonte do Plano de Fundo</string.settings.backgroundEntry>
+    <string.settings.backgroundEntry.defaultBg>Definido pelo tema</string.settings.backgroundEntry.defaultBg>
+    <string.settings.backgroundEntry.customBg>Imagem Personalizada</string.settings.backgroundEntry.customBg>
+    <string.settings.backgroundEntry.videoBg>Vídeo aleatório</string.settings.backgroundEntry.videoBg>
+    <string.settings.backgroundEntry.randomBg>Captura de tela aleatória</string.settings.backgroundEntry.randomBg>
+
+    <string.settings.gamelistBackgroundStyle>Estilo de fundo da lista de jogos</string.settings.gamelistBackgroundStyle>
+    <string.settings.gamelistBackgroundStyle.blurred>Desfocado</string.settings.gamelistBackgroundStyle.blurred>
+    <string.settings.gamelistBackgroundStyle.normal>Normal</string.settings.gamelistBackgroundStyle.normal>
+    <string.settings.gamelistBackgroundStyle.none>Sem plano de fundo</string.settings.gamelistBackgroundStyle.none>
+
+    <!-- Colors -->
+    <string.settings.color.blue>Azul</string.settings.color.blue>
+    <string.settings.color.purple>Roxo</string.settings.color.purple>
+    <string.settings.color.pink>Rosa</string.settings.color.pink>
+    <string.settings.color.red>Vermelho</string.settings.color.red>
+    <string.settings.color.orange>Laranja</string.settings.color.orange>
+    <string.settings.color.yellow>Amarelo</string.settings.color.yellow>
+    <string.settings.color.green>Verde</string.settings.color.green>
+    <string.settings.color.teal>Turquesa</string.settings.color.teal>
+    <string.settings.color.gray>Cinza</string.settings.color.gray>
+    <string.settings.color.beige>Bege</string.settings.color.beige>
+
+    <!-- Interface Texts -->
+    <string.view.detailed.description>Descrição</string.view.detailed.description>
+
+    <!-- Grid Icon Aspect -->
+    <string.settings.gridIconRatio>Proporção do ícones padrões</string.settings.gridIconRatio>
+    <string.settings.gridIconRatio.square>Quadrado</string.settings.gridIconRatio.square>
+    <string.settings.gridIconRatio.tip>Aplica-se ao ícone de pasta e cartucho (Não selecionar este)</string.settings.gridIconRatio.tip>
+
+
+    <string.settings.imageSource>Imagem para item da grade</string.settings.imageSource>
+    <string.settings.videoSource>Instantâneo de vídeo</string.settings.videoSource>
+
+    <string.imageSource.thumbnail>Arte da caixa</string.imageSource.thumbnail>
+    <string.imageSource.image>Captura de tela</string.imageSource.image>
+    <string.imageSource.marquee>Logo do jogo</string.imageSource.marquee>
+
+    <string.gridImageStyle>Estilo da imagem na grade</string.gridImageStyle>
+    <string.gridImageStyle.cover>Cobrir</string.gridImageStyle.cover>
+    <string.gridImageStyle.fit>Adaptar</string.gridImageStyle.fit>
+    <string.gridImageStyle.stretch>Esticar</string.gridImageStyle.stretch>
+
+    <string.default>Padrão</string.default>
+  </variables>
+
+</theme>

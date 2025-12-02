@@ -425,7 +425,8 @@ sleep 0.2
 echo 'confguring inputs'
 EE_DEVICE=$(cat /storage/.config/.OS_ARCH)
 echo 'confguring inputs on device:'$EE_DEVICE
-if [[ "$EE_DEVICE" == "RG351V" ]] || [[ "$EE_DEVICE" == "RG351MP" ]]
+#wlz
+if [[ "$EE_DEVICE" == "RG351V" ]] || [[ "$EE_DEVICE" == "RG351MP" ]] || [[ "$EE_DEVICE" == "RPPOCKET" ]]
 then
 	if [[ $(cat /sys/firmware/devicetree/base/model | tr '\0' '\n') == *"D007 Plus"* ]]; then
 		ln -s /dev/input/event5 /dev/input/by-path/platform-odroidgo2-joypad-event-joystick

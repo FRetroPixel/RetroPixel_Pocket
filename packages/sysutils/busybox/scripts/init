@@ -8,6 +8,7 @@
 # Copyright (C) 2018-present Team CoreELEC (https://coreelec.org)
 
 # create directories
+#创建游戏系统所需要的挂载点
 /usr/bin/busybox mkdir -p /dev
 /usr/bin/busybox mkdir -p /proc
 /usr/bin/busybox mkdir -p /sys
@@ -15,7 +16,9 @@
 /usr/bin/busybox mkdir -p /flash
 /usr/bin/busybox mkdir -p /sysroot
 /usr/bin/busybox mkdir -p /storage
+/usr/bin/busybox mkdir -p /li
 
+#mount -t ext4 /dev/mmcblk0p2 /mosdev
 # temp mountpoint for updates
 /usr/bin/busybox mkdir -p /update
 
@@ -23,8 +26,10 @@
 /usr/bin/busybox mount -t devtmpfs devtmpfs /dev
 /usr/bin/busybox mount -t proc proc /proc
 /usr/bin/busybox mount -t sysfs sysfs /sys
+/usr/bin/busybox mount -t tmpfs tmpfs /li
 
 # set needed variables
+# 设定需要的变量
 MODULE_DIR=/usr/lib/modules
 
 UPDATE_ROOT=/storage/.update
@@ -32,7 +37,7 @@ UPDATE_DIR="$UPDATE_ROOT"
 
 UPDATE_KERNEL="KERNEL"
 UPDATE_SYSTEM="SYSTEM"
-IMAGE_KERNEL="@KERNEL_NAME@"
+IMAGE_KERNEL="KERNEL"
 IMAGE_SYSTEM="SYSTEM"
 
 BOOT_STEP="start"
@@ -86,15 +91,21 @@ elif [ "$DEVICE" == "Anbernic RG351P" ]; then
   echo 1 > /sys/class/pwm/pwmchip0/pwm0/enable
   echo 1000000 > /sys/class/pwm/pwmchip0/pwm0/duty_cycle
 else #RG351V and RG351MP
-  # Enable GPIO 77 for power LED manipulation
-  echo 77 > /sys/class/gpio/export
 
-  # Enable WIFI GPIO for WIFI manipulation
-  echo 5 > /sys/class/gpio/export
+  # Enable GPIOfor power LED manipulation
+  #echo 77 > /sys/class/gpio/export
+  # Enable WIFI GPIO
+  echo 1 > /sys/class/gpio/export
+  # Enable AMP GPIO
+  echo 114 > /sys/class/gpio/export
 
-  # Power up the WIFI device
-  echo out > /sys/class/gpio/gpio5/direction
-  echo 1 >  /sys/class/gpio/gpio5/value
+  #echo out > /sys/class/gpio/gpio17/direction
+  echo out > /sys/class/gpio/gpio1/direction
+  echo out > /sys/class/gpio/gpio114/direction
+  
+  #echo 1 > /sys/class/gpio/gpio0/value
+  echo 1 > /sys/class/gpio/gpio1/value
+  echo 0 > /sys/class/gpio/gpio114/value
 
   if [ ! "$DEVICE" == "Anbernic RG351MP" ]; then
     # Enable PWM for rumble and turn rumble off during startup.
@@ -314,9 +325,10 @@ mount_part() {
 mount_sysroot() {
   if [ "$SYSTEM_TORAM" = "yes" ]; then
     cp /flash/$IMAGE_SYSTEM /dev/$IMAGE_SYSTEM
-    mount_part "/dev/$IMAGE_SYSTEM" "/sysroot" "ro,loop"
+    
+    mount_part "/dev/$IMAGE_SYSTEM" "/sysroot" "rw,loop"
   else
-    mount_part "/flash/$IMAGE_SYSTEM" "/sysroot" "ro,loop"
+    mount_part "/flash/$IMAGE_SYSTEM" "/sysroot" "rw,loop"
   fi
 
   if [ -f /flash/post-sysroot.sh ]; then
@@ -607,7 +619,7 @@ force_fsck() {
     if [ $(( $FSCK_RET & 8 )) -eq 8 ]; then
       # fubar
       echo "Forced fsck failed. Your system is broken beyond repair"
-      echo "Please re-install @DISTRONAME@"
+      echo "Please re-install AmberELEC"
       echo ""
       echo "Press enter to shutdown now"
       echo ""
@@ -926,7 +938,7 @@ check_update() {
   clear >/dev/console
   echo "UPDATE IN PROGRESS"
   echo ""
-  echo "Please do not reboot or turn off your @DISTRONAME@ device!"
+  echo "Please do not reboot or turn off your AmberELEC device!"
   echo ""
 
   if [ -f "$UPDATE_TAR" ]; then
@@ -1014,7 +1026,7 @@ check_update() {
     # don't make temporary files but instead copy
     # directly from mountpoint to /flash
     UPDATE_DIR=$UPDATE_ROOT/.tmp/mnt
-    UPDATE_KERNEL="@KERNEL_NAME@"
+    UPDATE_KERNEL="KERNEL"
   else
     UPDATE_FILENAME="$UPDATE_DIR/$UPDATE_SYSTEM"
   fi
@@ -1456,3 +1468,4 @@ delete_descriptors
 exec /usr/bin/busybox switch_root /sysroot /usr/lib/systemd/systemd $INIT_ARGS $INIT_UNIT
 
 error "switch_root" "Error in initramfs. Could not switch to new root"
+

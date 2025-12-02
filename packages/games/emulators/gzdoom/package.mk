@@ -2,16 +2,20 @@
 # Copyright (C) 2021-present AmberELEC (https://github.com/AmberELEC)
 
 PKG_NAME="gzdoom"
-PKG_VERSION="d2529437530b104d7da85c0f18fcaeb642f829a5"
+PKG_VERSION="9d8bc90c34ca7c271dd480f2456b2ae65c33beda"
 PKG_LICENSE="GPL"
-PKG_SITE="https://github.com/dhwz/gzdoom"
-PKG_URL="${PKG_SITE}.git"
+#PKG_SITE="https://github.com/dhwz/gzdoom"
+#PKG_URL="${PKG_SITE}.git"
+
+PKG_SITE="file://${OLDPWD}/extpackage/gzdoom-9d8bc90c34ca7c271dd480f2456b2ae65c33beda"
+PKG_URL="${PKG_SITE}"
 PKG_DEPENDS_HOST="toolchain zmusic:host libwebp:host"
 PKG_DEPENDS_TARGET="toolchain SDL2 gzdoom:host zmusic libwebp"
 PKG_LONGDESC="GZDoom is a modder-friendly OpenGL and Vulkan source port based on the DOOM engine"
 PKG_TOOLCHAIN="cmake-make"
 
-if [ ! "${DEVICE}" = "RG351MP" ] && [ ! "${DEVICE}" = "RG552" ]
+#wlz
+if [ ! "${DEVICE}" = "RG351MP" ] && [ ! "${DEVICE}" = "RG552" ] && [ ! "${DEVICE}" = "RPPOCKET" ]
 then
   PKG_PATCH_DIRS="RG351P"
 fi
@@ -55,7 +59,8 @@ makeinstall_target() {
   cp ${PKG_BUILD}/.${TARGET_NAME}/gzdoom ${INSTALL}/usr/bin
 
   mkdir -p ${INSTALL}/usr/config/distribution/gzdoom
-  if [ "${DEVICE}" = "RG351MP" ] || [ "${DEVICE}" = "RG552" ]; then
+  #wlz
+  if [ "${DEVICE}" = "RG351MP" ] || [ "${DEVICE}" = "RG552" ] || [ "${DEVICE}" = "RPPOCKET" ]; then
     cp ${PKG_DIR}/config/RG351MP/* ${INSTALL}/usr/config/distribution/gzdoom
   else
     cp ${PKG_DIR}/config/RG351P/* ${INSTALL}/usr/config/distribution/gzdoom

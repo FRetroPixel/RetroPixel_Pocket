@@ -12,7 +12,11 @@ DEVICE=$(tr -d '\0' < /sys/firmware/devicetree/base/model)
 performance
 
 # Show splash logo
-/usr/bin/show_splash.sh &
+./usr/bin/show_splash.sh &
+
+echo  "Custom_Program_StartedRunning" >/dev/console
+
+systemd-run /usr/bin/retropixel-server
 
 # write logs to tmpfs not the sdcard
 mkdir /tmp/logs
@@ -63,10 +67,13 @@ if [ ! -L "$CONFIG_DIR" ]; then
 fi
 
 # Setup default artbook symlink for use in ES
+A=/usr/config/emulationstation/themes/es-theme-albedo/
+B=/storage/.config/emulationstation/themes/es-theme-albedo
 DEFAULT_THEME_USR=/usr/config/emulationstation/themes/es-theme-art-book-next/
 DEFAULT_THEME_STORAGE=/storage/.config/emulationstation/themes/es-theme-art-book-next-default
 if [ ! -e "$DEFAULT_THEME_STORAGE" ]; then
   ln -s $DEFAULT_THEME_USR $DEFAULT_THEME_STORAGE
+  ln -s $A $B
 fi
 
 # Create the distribution directory if it doesn't exist, sync it if it does
@@ -107,7 +114,7 @@ fi
 
 # restart volume control service
 systemctl stop volume; systemctl start volume &
-
+#echo 0 > /sys/class/gpio/gpio114/value
 # start services
 /usr/bin/startservices.sh &
 
@@ -188,8 +195,9 @@ then
   BRIGHTNESS=3
 fi
 BRIGHTNESS=$(printf "%.0f" ${BRIGHTNESS})
-echo ${BRIGHTNESS} > /sys/class/backlight/backlight/brightness
-set_ee_setting system.brightness ${BRIGHTNESS}
+#屏蔽以前背光
+#echo ${BRIGHTNESS} > /sys/class/backlight/backlight/brightness
+#set_ee_setting system.brightness ${BRIGHTNESS}
 
 # If the WIFI adapter isn't enabled, disable it on startup
 # to soft block the radio and save a bit of power.
@@ -212,6 +220,7 @@ then
 fi
 
 rm -f "/storage/.config/device" 2>/dev/null
+echo $DEVICE
 if [ "$DEVICE" == "Anbernic RG351MP" ]; then
   VOLT1=$(cat /sys/bus/iio/devices/iio:device0/in_voltage1_raw)
   VOLT2=$(cat /sys/bus/iio/devices/iio:device0/in_voltage2_raw)
@@ -230,9 +239,13 @@ if [ "$DEVICE" == "Anbernic RG351MP" ] || [ "$DEVICE" == "PowKiddy Magicx XU10" 
 	amixer -c 0 cset iface=MIXER,name='Playback Path' SPK_HP
 fi
 
+amixer -c 0 cset numid=3 "178,178"
+
 # Initialize audio so the softvol mixer is created and audio is allowed to be changed
 # - This is the shortest, totally silent .wav I could create with audacity - duration is .001 seconds
 aplay /usr/bin/emustation-config-init.wav
+ 
+ /usr/bin/odroidgoa_utils.sh vol $(get_ee_setting "audio.volume")
 
 if [ "$EE_DEVICE" == "RG552" ] || [[ "$EE_DEVICE" =~ RG351 ]]; then
   # For some reason the audio is being reseted to 100 at boot, so we reapply the saved settings here
@@ -291,10 +304,14 @@ case "$DEFE" in
         ;;
 esac
 
+#echo 0 > /sys/class/gpio/gpio69/value
 # run custom_start ending scripts
+
 /storage/.config/custom_start.sh after
 
 # default to ondemand/powersave in EmulationStation
+#echo 0 > /sys/class/gpio/gpio114/value
+echo 0 > /sys/class/gpio/gpio106/value
 POWERSAVE_ES=$(get_ee_setting powersave_es)
 if [ "${POWERSAVE_ES}" == "1" ]; then
   es_powersave &
@@ -302,4 +319,6 @@ else
   es_ondemand &
 fi
 
-clear > /dev/console
+exit 0
+
+#clear > /dev/console

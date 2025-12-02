@@ -1,0 +1,35 @@
+<!--
+  Theme: Albedo
+  Author: mluizvitor
+-->
+
+<theme>
+  <formatVersion>7</formatVersion>
+
+  <view name="basic">
+    <image name="simple_background" extra="true">
+      <path>./assets/ratio32/gamelist-simple-bg.png</path>
+      <pos>0 0</pos>
+      <origin>0 0</origin>
+      <size>1 1</size>
+      <zIndex>5</zIndex>
+    </image>
+    
+    <image name="simple_background" ifSubset="Ratio:4-3">
+      <path>./assets/ratio43/gamelist-simple-bg.png</path>
+    </image>
+    
+    <image name="simple_background" ifSubset="Ratio:5-3">
+      <path>./assets/ratio53/gamelist-simple-bg.png</path>
+    </image>
+
+    <image name="simple_background" ifSubset="Ratio:16-9">
+      <path>./assets/ratio169/gamelist-simple-bg.png</path>
+    </image>
+
+    <textlist name="gamelist">
+      <size>1 0.85</size>      <!-- 480x320 / 480x 272y-->
+      <size ifHelpPrompts="true">1 0.775</size>      <!-- 480x320 / 208x 248y-->
+    </textlist>
+  </view>
+</theme>

@@ -63,16 +63,18 @@ makeinstall_target() {
   mkdir -p ${INSTALL}/usr/config/
   rsync -av ${PKG_DIR}/config/* ${INSTALL}/usr/config/
 
-  if [ ! "${DEVICE}" == "RG351MP" ] && [ ! "${DEVICE}" == "RG351V" ]; then
+  if [ ! "${DEVICE}" == "RG351MP" ] && [ ! "${DEVICE}" == "RG351V" ] && [ ! "${DEVICE}" == "RPPOCKET" ]; then
     rm -rf ${INSTALL}/usr/config/distribution/modules/display_fix.sh
   fi
 
   ln -sf /storage/.config/distribution ${INSTALL}/distribution
   find ${INSTALL}/usr/config/distribution/ -type f -exec chmod o+x {} \;
 
+	echo "当前设备: ${DEVICE}"
+	
   if [ "${DEVICE}" == "RG351P" ]; then
     cp ${INSTALL}/usr/config/distribution/configs/distribution.conf.351p ${INSTALL}/usr/config/distribution/configs/distribution.conf
-  elif  [ "${DEVICE}" == "RG351V" ] || [ "${DEVICE}" == "RG351MP" ]; then
+  elif  [ "${DEVICE}" == "RG351V" ] || [ "${DEVICE}" == "RG351MP" ] || [ "${DEVICE}" == "RPPOCKET" ]; then
     cp ${INSTALL}/usr/config/distribution/configs/distribution.conf.351v ${INSTALL}/usr/config/distribution/configs/distribution.conf
   elif [ "${DEVICE}" == "RG552" ]; then
     cp ${INSTALL}/usr/config/distribution/configs/distribution.conf.552  ${INSTALL}/usr/config/distribution/configs/distribution.conf
@@ -99,7 +101,7 @@ makeinstall_target() {
   mkdir -p ${INSTALL}/usr/share/retroarch-overlays
   if [ "${DEVICE}" == "RG351P" ]; then
     cp -r ${PKG_DIR}/overlay-p/* ${INSTALL}/usr/share/retroarch-overlays
-  elif [ "${DEVICE}" == "RG351V" ] || [ "${DEVICE}" == "RG351MP" ]; then
+  elif [ "${DEVICE}" == "RG351V" ] || [ "${DEVICE}" == "RG351MP" ] || [ "${DEVICE}" == "RPPOCKET" ]; then
     cp -r ${PKG_DIR}/overlay-v/* ${INSTALL}/usr/share/retroarch-overlays
   elif [ "${DEVICE}" == "RG552" ]; then
     cp -r ${PKG_DIR}/overlay-552/* ${INSTALL}/usr/share/retroarch-overlays
@@ -112,6 +114,22 @@ makeinstall_target() {
 
   find_file_path "splash/splash-*.png" && cp ${FOUND_PATH} ${INSTALL}/usr/config/splash
   find_file_path "splash/blank.png" && cp ${FOUND_PATH} ${INSTALL}/usr/config/splash
+#  新添加
+  mkdir -p ${INSTALL}/usr/share/bootloader
+  if [ "${DEVICE}" == "RG351P" ]; then
+    find_file_path "splash/splash-480.bmp" && cp ${FOUND_PATH} ${INSTALL}//usr/share/bootloader/logo.bmp
+  elif [ "${DEVICE}" == "RG351V" ] || [ "${DEVICE}" == "RG351MP" ] || [ "${DEVICE}" == "RPPOCKET" ] ; then
+    find_file_path "splash/splash-640.bmp" && cp ${FOUND_PATH} ${INSTALL}//usr/share/bootloader/logo.bmp
+    find_file_path "splash/battery_0.bmp" && cp ${FOUND_PATH} ${INSTALL}//usr/share/bootloader/battery_0.bmp
+    find_file_path "splash/battery_1.bmp" && cp ${FOUND_PATH} ${INSTALL}//usr/share/bootloader/battery_1.bmp
+    find_file_path "splash/battery_2.bmp" && cp ${FOUND_PATH} ${INSTALL}//usr/share/bootloader/battery_2.bmp
+    find_file_path "splash/battery_3.bmp" && cp ${FOUND_PATH} ${INSTALL}//usr/share/bootloader/battery_3.bmp
+    find_file_path "splash/battery_fail.bmp" && cp ${FOUND_PATH} ${INSTALL}//usr/share/bootloader/battery_fail.bmp
+    
+    echo "splash/splash-640.bmp"
+  elif [ "${DEVICE}" == "RG552" ]; then
+    find_file_path "splash/splash-1920.bmp" && cp ${FOUND_PATH} ${INSTALL}//usr/share/bootloader/logo.bmp
+  fi
 }
 
 post_install() {
@@ -139,24 +157,39 @@ post_install() {
 
   if [[ "${DEVICE}" =~ "RG351" ]]; then
     cp -f  ${PKG_DIR}/clocks/RK3326/clocklimits ${INSTALL}/etc
+  elif [[ "${DEVICE}" == "RPPOCKET" ]]; then
+    cp -f  ${PKG_DIR}/clocks/RK3326/clocklimits ${INSTALL}/etc
   elif [[ "${DEVICE}" == "RG552" ]]; then
     cp -f  ${PKG_DIR}/clocks/RK3399/clocklimits ${INSTALL}/etc
   fi
-
-  echo "" >${INSTALL}/etc/issue
-  echo -e "\033[38;5;220m     _         _            \033[38;5;255m ___ _    ___ ___ " >>${INSTALL}/etc/issue
-  echo -e "\033[38;5;220m    /_\  _ __ | |__  ___ _ _\033[38;5;255m| __| |  | __/ __|" >>${INSTALL}/etc/issue
-  echo -e "\033[38;5;220m   / _ \| '  \| '_ \/ -_) '_\033[38;5;255m| _|| |__| _| (__ " >>${INSTALL}/etc/issue
-  echo -e "\033[38;5;220m  /_/ \_\_|_|_|_.__/\___|_| \033[38;5;255m|___|____|___\___|" >>${INSTALL}/etc/issue
-  echo -e "\033[0m" >>${INSTALL}/etc/issue
-  echo "" >>${INSTALL}/etc/issue
-
+  
+  #echo "" >${INSTALL}/etc/issue
+  #echo -e "\033[38;5;220m     _         _            \033[38;5;255m ___ _    ___ ___ " >>${INSTALL}/etc/issue
+  #echo -e "\033[38;5;220m    /_\  _ __ | |__  ___ _ _\033[38;5;255m| __| |  | __/ __|" >>${INSTALL}/etc/issue
+  #echo -e "\033[38;5;220m   / _ \| '  \| '_ \/ -_) '_\033[38;5;255m| _|| |__| _| (__ " >>${INSTALL}/etc/issue
+  #echo -e "\033[38;5;220m  /_/ \_\_|_|_|_.__/\___|_| \033[38;5;255m|___|____|___\___|" >>${INSTALL}/etc/issue
+  #echo -e "\033[0m" >>${INSTALL}/etc/issue
+  #echo "" >>${INSTALL}/etc/issue
+  
+  #在这里放入一些需要加入的补丁程序
+  #后台服务程序
+  cp ${OLDPWD}/extpackage/AmberELEC-Server-C/retropixel-server ${INSTALL}/usr/bin/
+  #开机logo
+  cp ${OLDPWD}/extpackage/Pic/splash-640.png ${INSTALL}/usr/config/splash/splash-640.png
+  cp ${OLDPWD}/extpackage/Pic/splash-640.png ${INSTALL}/usr/config/splash/blank.png
+  #语言配置
+  cp ${OLDPWD}/extpackage/AmberELEC-Config/distribution.conf ${INSTALL}/usr/config/distribution/configs/distribution.conf
+  #界面配置
+  cp ${OLDPWD}/extpackage/AmberELEC-Config/es_settings.cfg ${INSTALL}/usr/config/emulationstation/
+  #额外主题
+  cp -rf ${OLDPWD}/extpackage/AmberELEC-themes ${INSTALL}/usr/config/emulationstation/themes/
+  
   ln -s /etc/issue ${INSTALL}/etc/motd
 
   cp ${PKG_DIR}/sources/amberelec.dialogrc ${INSTALL}/etc
   cp ${PKG_DIR}/sources/autostart.sh ${INSTALL}/usr/bin
   cp ${PKG_DIR}/sources/pico-8.sh ${INSTALL}/usr/bin
-  cp ${PKG_DIR}/sources/pico-8.sh "${INSTALL}/usr/config/distribution/modules/Start Pico-8.sh"
+  #cp ${PKG_DIR}/sources/pico-8.sh "${INSTALL}/usr/config/distribution/modules/Start Pico-8.sh"
   cp ${PKG_DIR}/sources/scripts/* ${INSTALL}/usr/bin
 
   rm -f ${INSTALL}/usr/bin/{sh,bash,busybox,sort}
@@ -174,3 +207,4 @@ post_install() {
   find ${INSTALL}/usr/ -type f -iname "*.sh" -exec chmod +x {} \;
   find ${INSTALL}/usr/bin -type f -exec chmod +x {} \;
 }
+

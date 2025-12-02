@@ -1,0 +1,17 @@
+<!--
+  Theme: Albedo
+  Author: mluizvitor
+-->
+
+<theme>
+  <formatVersion>7</formatVersion>
+
+  <variables>
+    <primaryColor>ED5353</primaryColor>
+
+    <primaryColorLightVariant>FFEBEB</primaryColorLightVariant>
+
+    <primaryColorDarkVariant>311e1e</primaryColorDarkVariant>
+    <primaryColorAlt>f28787</primaryColorAlt>
+  </variables>
+</theme>

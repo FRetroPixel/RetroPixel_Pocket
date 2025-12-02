@@ -1,0 +1,174 @@
+<!--
+  Theme: Albedo
+  Author: mluizvitor
+-->
+
+<theme>
+  <formatVersion>7</formatVersion>
+
+  <subset name="VideoSnapshot" displayName="${string.settings.videoSource}" appliesTo="video">
+    <include name="videoThumbnail" displayName="${string.imageSource.thumbnail}"/>
+    <include name="videoScreenshot" displayName="${string.imageSource.image}"/>
+    <include name="videoMarquee" displayName="${string.imageSource.marquee}"/>
+  </subset>
+
+  <view name="detailed, video">
+    <image name="detailed_background" extra="true">
+      <path>./assets/ratio32/gamelist-detailed-bg.png</path>
+      <pos>0 0</pos>
+      <origin>0 0</origin>
+      <size>1 1</size>
+      <zIndex>5</zIndex>
+    </image>
+
+    <image name="detailed_background" extra="true" ifSubset="Ratio:4-3">
+      <path>./assets/ratio43/gamelist-detailed-bg.png</path>
+    </image>
+
+    <image name="detailed_background" extra="true" ifSubset="Ratio:5-3">
+      <path>./assets/ratio53/gamelist-detailed-bg.png</path>
+    </image>
+
+    <image name="detailed_background" extra="true" ifSubset="Ratio:16-9">
+      <path>./assets/ratio169/gamelist-detailed-bg.png</path>
+    </image>
+
+    <textlist name="gamelist">
+      <size>0.433333333 0.85</size>      <!-- 480x320 / 208x 272y-->
+      <size ifHelpPrompts="true">0.433333333 0.775</size>      <!-- 480x320 / 208x 248y-->
+    </textlist>
+
+    <text name="md_lbl_rating, md_lbl_releasedate, md_lbl_developer, md_lbl_publisher, md_lbl_genre, md_lbl_players, md_lbl_lastplayed, md_lbl_playcount, md_developer, md_publisher, md_genre md_players, md_lastplayed, md_playcount, md_name">
+      <color></color>
+    </text>
+
+    <datetime name="md_lastplayed">
+      <color></color>
+    </datetime>
+
+    <image name="md_image">
+      <origin>0.5 0.5</origin>
+      <pos>0.716666667 0.425</pos>      <!-- 480x320 / 344x 136y -->
+      <maxSize>0.5 0.5</maxSize>      <!-- 480x320 / 240x 160y -->
+      <zIndex>4</zIndex>
+      <roundCorners>0.02</roundCorners>
+      <path>./assets/icons/cartridge=1-1.png</path>
+    </image>
+
+    <image name="md_marquee">
+      <pos>0.716666667 0.2125</pos>      <!-- 480x320 / 344x 68y -->
+      <origin>0.5 0.5</origin>      <!-- 480x320 / center center / -->
+      <maxSize>0.433333333 0.175</maxSize>      <!-- 480x320 / 208x 56y -->
+      <zIndex>6</zIndex>
+    </image>
+
+    <datetime name="md_releasedate">
+      <pos>0.841666667 0.7375</pos>
+      <pos ifSubset="Ratio:16-9">0.841666667 0.71851852</pos>
+      <visible ifHelpPrompts="true">0</visible>
+
+      <storyboard>
+        <animation property="x" from="0.875" to="0.841666667" duration="300" mode="EaseOut"/>
+        <animation property="opacity" from="0" to="1" duration="300" mode="EaseOut"/>
+      </storyboard>
+    </datetime>
+
+    <image name="md_releasedate_icon">
+      <pos>0.8 0.7375</pos>
+      <pos ifSubset="Ratio:16-9">0.80833333 0.71851852</pos>
+      <visible ifHelpPrompts="true">0</visible>
+
+      <storyboard>
+        <animation property="x" from="0.833333333" to="0.8" duration="300" mode="EaseOut"/>
+        <animation property="opacity" from="0" to="1" duration="300" mode="EaseOut"/>
+      </storyboard>
+    </image>
+
+    <text name="md_description">
+      <pos>0.466666667 0.775</pos>      <!-- 480x320 / 224x 240y-->
+      <pos ifHelpPrompts="true">0.466666667 0.725</pos>      <!-- 480x320 / 224x 232y-->
+
+      <size>0.5 0.2</size>      <!-- 480x320 / 240x 64y-->
+      <size ifHelpPrompts="true">0.5 0.175</size>      <!-- 480x320 / 240x 64y-->
+
+
+      <color>ffffff</color>
+      <fontPath>${typefaceRegular}</fontPath>
+      <fontSize>${fontSizeBody2-medium}</fontSize>
+      <fontSize ifSubset="FontSize:small">${fontSizeBody2-small}</fontSize>
+      <fontSize ifSubset="FontSize:large">${fontSizeBody2-large}</fontSize>
+      <lineSpacing>0.9</lineSpacing>
+    </text>
+
+    <text name="md_description" ifSubset="Ratio:16-9">
+      <pos>0.46666667 0.75555556</pos>      <!-- 480x320 / 224x 240y-->
+      <pos ifHelpPrompts="true">0.46666667 0.6962963</pos>      <!-- 480x320 / 224x 232y-->
+
+      <size>0.5 0.20740741</size>      <!-- 480x320 / 240x 64y-->
+      <size ifHelpPrompts="true">0.5 0.20740741</size>      <!-- 480x320 / 240x 64y-->
+    </text>
+
+    <text name="md_description_label" extra="true">
+      <text>${string.view.detailed.description}</text>
+
+      <color>${primaryColorLightVariant}</color>
+      <origin>0 0.5</origin>
+      <pos>0.466666667 0.7375</pos>
+      <pos ifSubset="Ratio:16-9">0.46666667 0.71851852</pos>
+      <size>0.3 ${fontSizeCaption-medium}</size>
+
+      <fontSize>${fontSizeCaption-medium}</fontSize>
+      <fontSize ifSubset="FontSize:small">${fontSizeCaption-small}</fontSize>
+      <fontSize ifSubset="FontSize:large">${fontSizeCaption-large}</fontSize>
+      <fontPath>${typefaceTitleBold}</fontPath>
+      <forceUppercase>1</forceUppercase>
+
+      <visible ifHelpPrompts="true">0</visible>
+      <zIndex>20</zIndex>
+    </text>
+
+    <text name="md_description_label, md_description">
+      <storyboard>
+        <animation property="x" from="0.5" to="0.466666667" duration="300" mode="EaseOut"/>
+        <animation property="opacity" from="0" to="1" duration="300" mode="EaseOut"/>
+      </storyboard>
+    </text>
+
+    <rating name="md_rating">
+      <origin>0 0.5</origin>
+      <pos>0.816666667 0.6625</pos>
+      <pos ifSubset="Ratio:16-9">0.81666667 0.65185185</pos>
+
+      <storyboard>
+        <animation property="x" from="0.85" to="0.816666667" duration="300" mode="EaseOut"/>
+        <animation property="opacity" from="0" to="1" duration="300" mode="EaseOut"/>
+      </storyboard>
+    </rating>
+  </view>
+
+  <feature supported="video">
+    <view name="video">
+      <video name="md_video">
+        <origin>0.5 0.5</origin>
+        <pos>0.716666667 0.425</pos>        <!-- 480x320 / 344x 136y -->
+        <maxSize>0.5 0.5</maxSize>        <!-- 480x320 / 240x 160y -->
+        <zIndex>4</zIndex>
+        <roundCorners>0.02</roundCorners>
+        <delay>1</delay>
+        <showSnapshotNoVideo>true</showSnapshotNoVideo>
+        <showSnapshotDelay>true</showSnapshotDelay>
+
+        <snapshotSource ifSubset="VideoSnapshot:videoThumbnail">thumbnail</snapshotSource>
+        <snapshotSource ifSubset="VideoSnapshot:videoScreenshot">image</snapshotSource>
+        <snapshotSource ifSubset="VideoSnapshot:videoMarquee">marquee</snapshotSource>
+      </video>
+
+      <image name="md_marquee">
+        <visible>false</visible>
+      </image>
+      <image name="md_image">
+        <visible>false</visible>
+      </image>
+    </view>
+  </feature>
+</theme>

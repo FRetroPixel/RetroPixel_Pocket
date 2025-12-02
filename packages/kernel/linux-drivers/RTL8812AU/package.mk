@@ -12,6 +12,7 @@ PKG_DEPENDS_TARGET="toolchain linux"
 PKG_NEED_UNPACK="${LINUX_DEPENDS}"
 PKG_LONGDESC="Realtek RTL8812AU Linux 3.x driver"
 PKG_IS_KERNEL_PKG="yes"
+PKG_TOOLCHAIN="cross"
 
 pre_make_target() {
   unset LDFLAGS

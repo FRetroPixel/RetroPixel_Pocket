@@ -45,25 +45,65 @@ export -f json_worker
 # The function will run either "build <package>" or "install <package>".
 # ${slot} is the job slot number, ie. 1-8 when THREADCOUNT=8.
 # ${job} is the sequence within the total number of ${jobs}.
+
+# 1. 变量初始化和环境设置
+# 2. 解析输入参数，确定任务类型和包名
+# 3. 加载该包的特定配置
+# 4. 执行核心任务：构建或安装
+# 5. 处理附加逻辑（如安装附加组件）
+# 6. 更新全局构建进度
+# 7. 处理成功或失败的后续操作
+# 8. 返回任务结果
 package_worker() {
+  
+  # 定义了四个局部变量，接收从 parallel 传递过来的参数
+  # slot：任务槽位号（例如，在 8 线程构建中，这个值是 1-8）。
+  # job：任务在总任务序列中的序号。
+  # jobs：总任务数。
+  # args：任务的具体参数，通常是 "build package_name" 或 "install package_name"。
   local slot=$1 job=$2 jobs=$3 args="$4"
   local task pkgname result status
   local addon istarget isaddon
 
+  # 设置两个环境变量并导出，使得在这个函数中调用的其他脚本（如 config/options 或 build 脚本）也能访问到当前任务的 ID 和总任务数。
   export MTJOBID=${slot} MTMAXJOBS=${jobs}
 
+  # 从 args 变量中读取两个单词，分别存入 task 和 pkgname 变量。
+  # 如果 args 的值是 "build zlib"，那么 task 将是 "build"，pkgname 将是 "zlib"。
   read -r task pkgname <<< "${args}"
 
+  # 这一步是为后续的 build 或 install 命令准备好所有必要的环境变量。
   . config/options "${pkgname}"
 
+  # 这是一种同步机制，确保只有第一个启动的 package_worker 进程会记录 parallel 的主进程 ID。这个 PID 文件可能被用于在需要时向 parallel 进程发送信号（例如，中止构建）。
   [ ! -f "${THREAD_CONTROL}/parallel.pid" ] && echo "${PARALLEL_PID}" >"${THREAD_CONTROL}/parallel.pid"
 
+  # 打印即将执行的命令和相关变量
+  echo "                                                  "
+  echo "=================================================="
+  echo "## 开始执行任务 ##"
+  echo "执行脚本路径: ${SCRIPTS}/${task}"
+  echo "目标包名: ${pkgname}"
+  echo "任务类型 (task): ${task}"
+  echo "当前任务槽位 (slot): ${slot}"
+  echo "当前任务序号 (job): ${job}"
+  echo "总任务数 (jobs): ${jobs}"
+  echo "传递给任务的原始参数 (args): ${args}"
+  echo "--------------------------------------------------"
+  echo "执行的命令: ${SCRIPTS}/${task} ${pkgname}"
+  echo "=================================================="
+
+  # 执行实际任务并捕获其执行结果（成功 / 失败）。
   ${SCRIPTS}/${task} ${pkgname} 2>&1 && result=0 || result=1
 
+
+
+  # 为后续的附加逻辑（如安装 addon）提供判断依据。
   [[ ${pkgname} =~ :target$ || "${pkgname//:/}" = "${pkgname}" ]] && istarget="yes" || istarget="no"
 
   [[ "${MTADDONBUILD}" = "yes" && ( "${PKG_IS_ADDON}" = "yes" || "${PKG_IS_ADDON}" = "embedded" ) ]] && isaddon="yes" || isaddon="no"
 
+  # 处理 Addon 安装
   if [ "${isaddon}" = "yes" -a "${istarget}" = "yes" ]; then
     if [ ${result} -eq 0 ]; then
       ${SCRIPTS}/install_addon ${pkgname} 2>&1 && result=0 || result=1
@@ -78,16 +118,25 @@ package_worker() {
     fi
   fi
 
+  # 更新全局进度
   (
+    # 确保多线程并行执行时，只有一个 package_worker 进程能同时更新进度
     flock --exclusive 95
+    # 根据上一步任务的执行结果（result 变量），给 status 变量赋值为 DONE 或 FAIL，用于后续进度日志的状态显示
     [ ${result} -eq 0 ] && status="DONE" || status="FAIL"
+    # 读取当前的全局构建进度值
     num=$(< "${THREAD_CONTROL}/progress")
+    # 进度更新的 “原子性保障步骤”
     mv "${THREAD_CONTROL}/progress" "${THREAD_CONTROL}/progress.prev"
+    # 全局进度值的递增操作
     num=$((num + 1))
+    # 进度更新的 “最终落地步骤”
     echo ${num} >"${THREAD_CONTROL}/progress"
+    # 打印出进度字符串
     printf "[%0*d/%0*d] [%-4s] %-7s %s\n" ${#jobs} ${num} ${#jobs} ${jobs} "${status}" "${task}" "${pkgname}" >&2
   ) 95>"${THREAD_CONTROL}/locks/.progress"
 
+  # 任务结果后续处理
   if [ ${result} -eq 0 ]; then
     pkg_lock_status "IDLE"
   else
@@ -106,14 +155,25 @@ EOF
     fi
   fi
 
+  # 返回结果
   return ${result}
 }
 export -f package_worker
 
 start_multithread_build() {
+  echo "start_multithread_build"
+  #bash -c 'read -n 1 -s -r'
+
+  #地单线程编译的状态反馈，核心结论：result=0 表示编译成功，无报错；singlethread 说明编译仅使用了单个线程，未开启多线程加速
   local singlethread buildopts result=0
+  
+  #THREADCOUNT=1
 
   # init thread control folder
+  echo "初始化 thread 控制文件夹"
+  echo ${THREAD_CONTROL}
+  #bash -c 'read -n 1 -s -r'
+
   rm -rf "${THREAD_CONTROL}"
   mkdir -p "${THREAD_CONTROL}/locks"
   echo -1 >"${THREAD_CONTROL}/progress.prev"
@@ -122,15 +182,20 @@ start_multithread_build() {
   touch "${THREAD_CONTROL}/status"
 
   # Increase file descriptors if building one thread/package
+  # 在单线程编译时，临时提高系统的文件描述符上限，以避免因打开文件过多而导致的编译失败
   [ "${THREADCOUNT}" = "0" ] && ulimit -n ${ULIMITN:-10240}
 
+
   # Bootstrap GNU parallel
+  # 编译和安装 GNU Parallel 工具，并且在构建过程中禁用了某些锁机制（MTWITHLOCKS=no）
   MTWITHLOCKS=no $SCRIPTS/build parallel:host 2>&1 || die "Unable to bootstrap parallel package"
 
   # determine number of available slots for the given THREADCOUNT - optimise logging for single threaded builds
+  # 判断当前环境下，指定的 THREADCOUNT 是否能真正实现并行执行，并将结果存入 singlethread 变量（yes 表示实际上是单线程，no 表示支持并行）
   [ $(seq 1 32 | ${TOOLCHAIN}/bin/parallel --plain --no-notice --max-procs ${THREADCOUNT} echo {%} | sort -n | tail -1) -eq 1 ] && singlethread=yes || singlethread=no
 
   # create a single log file by default for a single threaded build (or the builder is a masochist)
+  # 根据构建的并行性（singlethread）和用户配置（ONELOG），决定 GNU Parallel 的日志输出模式：单线程构建默认合并所有日志到一个文件，并行构建则默认分开输出（或按用户指定强制合并），同时通过 --group/--ungroup 控制日志的可读性。
   if [ "${singlethread}" = "yes" -a "${ONELOG,,}" != "no" ] || [ "${ONELOG,,}" = "yes" ]; then
     buildopts+=" --ungroup"
   else
@@ -139,24 +204,77 @@ start_multithread_build() {
     buildopts+=" --group"
   fi
 
+  echo "=== 并行构建信息 ==="
+  echo "实际单线程构建: $singlethread"
+  echo "期望线程数: $THREADCOUNT"
+  echo "是否合并日志: $ONELOG"
+  echo "构建选项: $buildopts"
+  echo "===================="
+  #bash -c 'read -n 1 -s -r'
+
   # When building addons, don't halt on error - keep building all packages/addons
+  # 根据 MTADDONBUILD 变量的值，为 GNU Parallel 构建命令添加不同的 --halt 选项，用于控制当某个构建任务失败时，是否停止后续所有任务
   [ "${MTADDONBUILD}" = "yes" ] && buildopts+=" --halt never" || buildopts+=" --halt now,fail=1"
 
   # pipefail: return value of a pipeline is the value of the last (rightmost) command to exit with a non-zero status
+  # 当开启 set -o pipefail 后，管道的返回值会变成管道中第一个非零退出状态码。如果所有命令都成功（退出码为 0），则管道的返回值为 0
   set -o pipefail
 
+  # 包含了所有mk文件的位置
+  # mk 文件是 Makefile 的简化 / 模块化文件，包含编译规则、依赖关系、变量定义等，是构建系统（如 Make、CMake）执行编译、打包的核心配置文件。
+  echo "PACKAGE_GLOBA: $_CACHE_PACKAGE_GLOBAL"
+  echo "PACKAGE_LOCAL: $_CACHE_PACKAGE_LOCAL"
+
+  #bash -c 'read -n 1 -s -r'
+  #读取缓存文件、并行处理数据、生成构建计划，并最终将结果保存到一个文件中。如果这个长命令链中的任何一环失败，它会捕获错误状态码。
   cat ${_CACHE_PACKAGE_GLOBAL} ${_CACHE_PACKAGE_LOCAL} | \
+  #将之前cat的所有任务进行分批规划
     ${TOOLCHAIN}/bin/parallel --plain --no-notice --max-args 30 --halt now,fail=1 json_worker | \
+    #解析元数据：读取并理解每个包的名称、版本、依赖关系等信息。
+    #进行依赖分析：根据依赖关系，计算出一个正确的构建顺序（拓扑排序）。
+    #生成构建计划：按照计算出的顺序，创建一个任务列表，这个列表就是构建计划。
+    #输出计划：将构建计划写入到 ${THREAD_CONTROL}/plan 文件中。
+    #错误处理：如果生成计划的过程中出现任何错误（例如，发现循环依赖），则将 result 变量设置为 1，以标记构建失败。
     ${SCRIPTS}/genbuildplan.py --no-reorder --show-wants --build ${@} > "${THREAD_CONTROL}"/plan || result=1
 
-  if [ ${result} -eq 0 ]; then
-    save_build_config
+  # 打印计划内容（可选）
+  echo "=== 生成的构建计划 ==="
+  cat "${THREAD_CONTROL}/plan"
+  echo "======================"
 
+  # 核心执行阶段。它在确认构建计划成功生成（result 为 0）后，根据计划文件（plan）并行地调用 package_worker 来执行实际的构建任务
+  echo "编译核心执行阶段"
+  #bash -c 'read -n 1 -s -r'
+
+  # 它的作用是检查上一步命令的执行结果，即计划制定过程，如果上一步成功（result 变量的值为 0），则执行 then 后面的代码块
+  if [ ${result} -eq 0 ]; then
+    # 在开始执行耗时较长的并行构建任务之前，保存一份当前构建环境的快照或配置信息，以便后续追溯、调试或重启构建
+    save_build_config
+    
+    #读取构建计划：从 ${THREAD_CONTROL}/plan 文件中读取之前生成的构建任务列表。
+    #提取关键信息：使用 awk 从每个任务中提取出前两列（通常是包名和版本）。
+    #设置环境变量：为后续的并行任务设置两个环境变量 MTBUILDSTART 和 MTWITHLOCKS。
+    #并行执行任务：调用 parallel 工具，根据提取的任务列表，并行地调用 package_worker 脚本执行构建。
+    #记录任务日志：parallel 会将每个任务的执行情况（如开始时间、结束时间、退出码等）记录到 joblog 文件中。
+    #错误处理：如果任何一个构建任务失败，整个管道命令的退出码会被捕获，result 变量会被设置为 1。
+
+    # cat "${THREAD_CONTROL}"/plan 将文件内容打印到标准输出，作为下一个命令的输入。
+    # awk '{print $1 " " $2}' 从 plan 文件的每一行中提取出前两列。
+    # MTBUILDSTART=$(date +%s) MTWITHLOCKS=yes ${TOOLCHAIN}/bin/parallel ... 
+    # MTBUILDSTART=$(date +%s)： 用于记录每个包开始构建的时间
+    # MTWITHLOCKS=yes： 启用锁机制，以防止多个并行任务在操作共享资源
+    # ${TOOLCHAIN}/bin/parallel： 调用工具链中的 parallel 程序来执行并行任务
+    # parallel 的参数 --plain --no-notice --max-procs ${THREADCOUNT} --joblog="${THREAD_CONTROL}/joblog" --plus ${buildopts}
+    # --plain：禁用 parallel 的特殊替换语法，确保参数原样传递给 package_worker
+    # --no-notice：不打印 parallel 的版本信息和使用提示。
+    # --max-procs ${THREADCOUNT}：设置最大并行进程数为 THREADCOUNT，即同时最多有 THREADCOUNT 个 package_worker 进程在运行。
+    # --joblog="${THREAD_CONTROL}/joblog"：指定一个日志文件，parallel 会自动记录每个任务的执行情况，包括任务 ID、开始时间、结束时间、退出码、执行的命令等。这对于跟踪构建进度和排查失败原因非常有用
+    # --plus：启用 parallel 的 “plus” 模式，允许使用更多的特殊占位符（如 {#}、{##} 等）。
+    # ${buildopts}：引入之前动态构建的 buildopts 变量，该变量可能包含 --group、--ungroup 或 --halt 等参数，用于控制日志输出和失败处理策略。
     cat "${THREAD_CONTROL}"/plan | awk '{print $1 " " $2}' | \
       MTBUILDSTART=$(date +%s) MTWITHLOCKS=yes ${TOOLCHAIN}/bin/parallel \
         --plain --no-notice --max-procs ${THREADCOUNT} --joblog="${THREAD_CONTROL}/joblog" --plus ${buildopts} \
         package_worker {%} {#} {##} {} || result=1
-
     rm -f "${THREAD_CONTROL}/parallel.pid"
   fi
 

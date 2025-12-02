@@ -1,0 +1,10 @@
+diff --git a/drivers/video/drm/bmp_helper.c b/drivers/video/drm/bmp_helper.c
+
+--- a/drivers/video/drm/bmp_helper.c
++++ b/drivers/video/drm/bmp_helper.c
+@@ -152,3 +152,5 @@ 
+ 	uint8_t *cmap_base;
+ 
++	bmp->header.signature[0] = 'B';
++	bmp->header.signature[1] = 'M';
+ 	if (!bmp || !(bmp->header.signature[0] == 'B' &&

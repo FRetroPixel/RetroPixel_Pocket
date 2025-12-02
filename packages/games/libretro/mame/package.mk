@@ -3,13 +3,16 @@
 # Copyright (C) 2022-present AmberELEC (https://github.com/AmberELEC)
 
 PKG_NAME="mame"
-PKG_VERSION="f2b7a03ade76af6fc6d63d6c7786335717d48a43"
+PKG_VERSION="4cd28066d8f9e129b1915a72163a10dac84a8731"
 PKG_LICENSE="GPLv2"
-PKG_SITE="https://github.com/libretro/mame"
-PKG_URL="${PKG_SITE}.git"
+#PKG_SITE="https://github.com/libretro/mame"
+#PKG_URL="${PKG_SITE}.git"
 PKG_DEPENDS_TARGET="toolchain zlib flac sqlite expat"
 PKG_LONGDESC="MAME - Multiple Arcade Machine Emulator"
 PKG_TOOLCHAIN="make"
+PKG_SITE="file://${OLDPWD}/extpackage/mame-4cd28066d8f9e129b1915a72163a10dac84a8731"
+PKG_URL="${PKG_SITE}"
+
 
 PKG_MAKE_OPTS_TARGET="REGENIE=1 \
                       VERBOSE=1 \

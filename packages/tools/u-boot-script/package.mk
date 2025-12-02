@@ -23,3 +23,4 @@ makeinstall_target() {
   mkdir -p ${INSTALL}/usr/share/bootloader
     cp -a ${PKG_BUILD}/* ${INSTALL}/usr/share/bootloader/
 }
+

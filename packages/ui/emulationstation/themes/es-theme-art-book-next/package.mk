@@ -12,6 +12,15 @@ PKG_LONGDESC="Art Book Next - AmberELEC default theme"
 PKG_TOOLCHAIN="manual"
 
 makeinstall_target() {
-    mkdir -p ${INSTALL}/usr/config/emulationstation/themes/${PKG_NAME}
-    cp -rf * ${INSTALL}/usr/config/emulationstation/themes/${PKG_NAME}
+		echo pwd
+   #echo $(pwd)
+   
+    #mkdir -p ${INSTALL}/usr/config/emulationstation/themes/${PKG_NAME}
+    #cp -rf * ${INSTALL}/usr/config/emulationstation/themes/${PKG_NAME}
+    
+   
+		#cd /home/li/RK3326/AmberELEC/distributions/AmberELEC/theme
+   #cp -rf * ${INSTALL}/usr/config/emulationstation/themes/
+   #cp -rf * ${INSTALL}/usr/config/emulationstation/themes/
+   
 }

@@ -4,8 +4,13 @@
 PKG_NAME="tic-80"
 PKG_VERSION="bf5b95cf31bc40cc85ab400d723f95cb841436bb"
 PKG_LICENSE="GPLv3"
-PKG_SITE="https://github.com/nesbox/TIC-80"
-PKG_URL="${PKG_SITE}.git"
+
+#PKG_SITE="https://github.com/nesbox/TIC-80"
+#PKG_URL="${PKG_SITE}.git"
+
+PKG_SITE="file://${OLDPWD}/extpackage/tic-80-bf5b95cf31bc40cc85ab400d723f95cb841436bb"
+PKG_URL="${PKG_SITE}"
+
 PKG_DEPENDS_TARGET="toolchain tic-80:host"
 PKG_LONGDESC="TIC-80 is a fantasy computer for making, playing and sharing tiny games."
 PKG_TOOLCHAIN="cmake-make"

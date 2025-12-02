@@ -4,8 +4,10 @@
 PKG_NAME="mame2016"
 PKG_VERSION="01058613a0109424c4e7211e49ed83ac950d3993"
 PKG_LICENSE="GPLv2"
+
 PKG_SITE="https://github.com/libretro/mame2016-libretro"
 PKG_URL="${PKG_SITE}.git"
+
 PKG_DEPENDS_TARGET="toolchain linux glibc alsa-lib"
 PKG_LONGDESC="Late 2016 version of MAME (0.174) for libretro. Compatible with MAME 0.174 romsets."
 PKG_TOOLCHAIN="make"

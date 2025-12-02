@@ -2,12 +2,14 @@
 # Copyright (C) 2021-present AmberELEC (https://github.com/AmberELEC)
 
 PKG_NAME="webui"
-PKG_VERSION="8699e1d43349c7a89ec837e10016736a6b32b835"
+PKG_VERSION="a7b331ab918a2c078a96059bb9514c0680c558e9"
 PKG_GIT_CLONE_BRANCH="main"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 
-PKG_URL="https://github.com/AmberELEC/webui.git"
+#PKG_URL="https://github.com/AmberELEC/webui.git"
+PKG_SITE="file://${OLDPWD}/extpackage/webui-a7b331ab918a2c078a96059bb9514c0680c558e9"
+PKG_URL="${PKG_SITE}"
 
 # NOTE:
 # - linux-pam needed for login

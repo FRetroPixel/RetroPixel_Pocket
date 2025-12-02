@@ -1,0 +1,36 @@
+<!--
+  Theme: Albedo
+  Author: mluizvitor
+-->
+
+<theme>
+  <formatVersion>7</formatVersion>
+
+  <variables>
+    <typefaceCondensed>./assets/fonts/BarlowCondensed/BarlowCondensed-Medium.ttf</typefaceCondensed>
+    <typefaceLight>./assets/fonts/FiraSansCondensed/FiraSansCondensed-Regular.ttf</typefaceLight>
+    <typefaceRegular>./assets/fonts/FiraSansCondensed/FiraSansCondensed-Medium.ttf</typefaceRegular>
+    <typefaceBold>./assets/fonts/FiraSansCondensed/FiraSansCondensed-Bold.ttf</typefaceBold>
+
+    <typefaceTitleRegular>./assets/fonts/Teko/Teko-Medium.ttf</typefaceTitleRegular>
+    <typefaceTitleBold>./assets/fonts/Teko/Teko-SemiBold.ttf</typefaceTitleBold>
+
+    <fontSizeH1-medium>0.05</fontSizeH1-medium> <!-- 16 -->
+    <fontSizeH2-medium>0.04375</fontSizeH2-medium> <!-- 14 -->
+    <fontSizeBody-medium>0.0375</fontSizeBody-medium>  <!-- 12 -->
+    <fontSizeBody2-medium>0.03125</fontSizeBody2-medium>  <!-- 10 -->
+    <fontSizeCaption-medium>0.028125</fontSizeCaption-medium>  <!-- 9 -->
+    
+    <fontSizeH1-small>0.04375</fontSizeH1-small> <!-- 14 -->
+    <fontSizeH2-small>0.0375</fontSizeH2-small> <!-- 12 -->
+    <fontSizeBody-small>0.03125</fontSizeBody-small>  <!-- 10 -->
+    <fontSizeBody2-small>0.028125</fontSizeBody2-small>  <!-- 9 -->
+    <fontSizeCaption-small>0.028125</fontSizeCaption-small>  <!-- 9 -->
+
+    <fontSizeH1-large>0.05625</fontSizeH1-large> <!-- 18 -->
+    <fontSizeH2-large>0.05</fontSizeH2-large> <!-- 16 -->
+    <fontSizeBody-large>0.04375</fontSizeBody-large>  <!-- 14 -->
+    <fontSizeBody2-large>0.0375</fontSizeBody2-large>  <!-- 12 -->
+    <fontSizeCaption-large>0.03125</fontSizeCaption-large>  <!-- 10 -->
+  </variables>
+</theme>

@@ -1,0 +1,209 @@
+<!--
+  Theme: Elementerial
+  Author: mluizvitor
+-->
+
+<theme>
+  <formatVersion>7</formatVersion>
+
+  <!--Configurações de ajuda-->
+  <view name="system, basic, detailed, grid, video">
+    <helpsystem name="help">
+      <fontPath>${fontHelper}</fontPath>
+      <fontSize>${fontSizeBody-medium}</fontSize>
+      <fontSize ifSubset="FontSize:large">${fontSizeBody-large}</fontSize>
+      <fontSize ifSubset="FontSize:small">${fontSizeBody-small}</fontSize>
+      <origin>0 0.5</origin>
+      <pos>0.016666667 0.96</pos>
+    </helpsystem>
+
+    <image name="borderOverlay" extra="true">
+      <pos>0 0</pos>
+      <origin>0 0</origin>
+      <size>1 1</size>
+      <zIndex>100</zIndex>
+    </image>
+  </view>
+
+  <!--Configurações comuns de views-->
+  <view name="basic, detailed, grid, video">
+    <text name="logoText">
+      <fontPath>${fontBold}</fontPath>
+      <fontSize>${fontSizeH2-medium}</fontSize>
+      <fontSize ifSubset="FontSize:large">${fontSizeH2-large}</fontSize>
+      <fontSize ifSubset="FontSize:small">${fontSizeH2-small}</fontSize>
+      <forceUppercase>0</forceUppercase>
+      <alignment>left</alignment>
+      <zIndex>5</zIndex>
+    </text>
+
+    <textlist name="gamelist">
+      <fontPath>${fontRegular}</fontPath>
+      <fontSize>${fontSizeBody-medium}</fontSize>
+      <fontSize ifSubset="FontSize:large">${fontSizeBody-large}</fontSize>
+      <fontSize ifSubset="FontSize:small">${fontSizeBody-small}</fontSize>
+      <alignment>left</alignment>
+      <origin>0 0</origin>
+      <zIndex>5</zIndex>
+    </textlist>
+
+    <image name="background">
+      <path>./assets/background.png</path>
+      <pos>0 0</pos>
+      <origin>0 0</origin>
+      <size>1 1</size>
+      <zIndex>-10</zIndex>
+    </image>
+
+    <image name="cover_list" extra="true">
+      <size>1 0</size>
+      <origin>0 0.5</origin>
+      <pos>0 0.225</pos>
+      <minSize>1 0.45</minSize>
+      <zIndex>-5</zIndex>
+    </image>
+
+    <image name="background_overlay" extra="true">
+      <size>1 1</size>
+      <origin>0 0</origin>
+      <pos>0 0</pos>
+      <zIndex>-4</zIndex>
+    </image>
+  </view>
+
+  <view name="basic, detailed, video">
+    <text name="logoText">
+      <pos>0.033333 0.1</pos>      <!--480x320 / 16x 32y-->
+      <size>0.933333 ${fontSizeH2-medium}</size>      <!-- 480x320 / 448x -->
+      <origin>0 0.5</origin>
+    </text>
+
+    <textlist name="gamelist">
+      <pos>0 0.2</pos>      <!-- 480x320 / 0x 64y -->
+      <horizontalMargin>0.033333</horizontalMargin>      <!-- 16px -->
+    </textlist>
+  </view>
+
+  <view name="video">
+    <textlist name="gamelist">
+      <lineSpacing ifHelpPrompts="true" ifSubset="FontSize:small">1.7</lineSpacing>
+    </textlist>
+  </view>
+
+  <view name="basic">
+    <textlist name="gamelist">
+      <size>1 0.8</size>      <!-- 480x320 / 480x 256y-->
+      <size ifHelpPrompts="true">1 0.725</size>      <!-- 480x320 / 480x 232y-->
+    </textlist>
+  </view>
+
+  <view name="detailed, video, grid">
+    <text name="md_lbl_rating, md_lbl_releasedate, md_lbl_developer, md_lbl_publisher, md_lbl_genre, md_lbl_players, md_lbl_lastplayed, md_lbl_playcount, md_releasedate, md_developer, md_publisher, md_genre, md_players, md_lastplayed, md_playcount, md_description, md_name">
+      <visible>false</visible>
+      <fontPath>${fontRegular}</fontPath>
+      <fontSize>${fontSizeCaption-small}</fontSize>
+      <lineSpacing>1.25</lineSpacing>
+    </text>
+
+    <datetime name="md_releasedate, md_lastplayed">
+      <visible>false</visible>
+    </datetime>
+  </view>
+
+  <view name="detailed">
+    <textlist name="gamelist">
+      <size>0.466667 0.8</size>      <!-- 480x320 / 224x 256y-->
+      <size ifHelpPrompts="true">0.466667 0.725</size>      <!-- 480x320 / 224x 232y-->
+    </textlist>
+
+    <image name="md_image">
+      <pos>0.733333 0.525</pos>      <!-- 480x320 / (240 + maxWidth / 2 = 352)x (80 + maxHeight / 2 = 168)y -->
+      <origin>0.5 0.5</origin>
+      <maxSize>0.466667 0.55</maxSize>      <!-- 480x320 / 224x 176y -->
+      <zIndex>5</zIndex>
+      <roundCorners>0.05</roundCorners>
+    </image>
+
+    <image name="md_marquee">
+      <pos>0.733333 0.25</pos>      <!-- 480x320 / 352x 80y -->
+      <origin>0.5 0.5</origin>
+      <maxSize>0.4 0.175</maxSize>      <!-- 480x320 / 192x 56y -->
+      <zIndex>6</zIndex>
+    </image>
+
+    <rating name="md_rating">
+      <origin>0 0</origin>
+
+      <filledPath>./assets/icons/star.svg</filledPath>
+      <unfilledPath>./assets/icons/star_border.svg</unfilledPath>
+
+      <zIndex>5</zIndex>
+    </rating>
+  </view>
+
+
+  <view name="video">
+    <image name="md_marquee">
+      <pos>0.2 0.1875</pos>      <!-- 480x320 / (240 + maxWidth / 2 = 352)x (80 + maxHeight / 2 = 168)y -->
+      <origin>0.5 0.5</origin>
+      <maxSize>0.333333333 0.325</maxSize>      <!-- 480x320 / 224x 176y -->
+    </image>
+
+    <image name="md_image">
+      <origin>0.5 0.5</origin>
+      <pos>0.7 0.25</pos>
+      <minSize>0.7 0.55</minSize>
+      <zIndex>-1</zIndex>
+    </image>
+
+    <video name="md_video">
+      <origin>0.5 0.5</origin>
+      <pos>0.7 0.25</pos>
+      <minSize>0.7 0.55</minSize>
+      <zIndex>0</zIndex>
+      <delay>1</delay>
+      <showSnapshotNoVideo>false</showSnapshotNoVideo>
+      <showSnapshotDelay>false</showSnapshotDelay>
+      <effect>none</effect>
+    </video>
+
+    <rating name="md_rating">
+      <visible>false</visible>
+    </rating>
+
+    <image name="background_overlay" extra="true">
+      <size>1 1</size>
+      <origin>0 0</origin>
+      <pos>0 0</pos>
+      <zIndex>4</zIndex>
+    </image>
+
+    <textlist name="gamelist">
+      <pos>0 0.45</pos>
+      <size>1 0.55</size>      <!-- 480x320 / 480x 176y-->
+      <size ifHelpPrompts="true">1 0.475</size>      <!-- 480x320 / 480x 152y-->
+    </textlist>
+
+    <text name="logoText">
+      <origin>0 0.5</origin>
+      <pos>0.033333333 0.4</pos>
+    </text>
+  </view>
+
+  <subset name="Ratio" displayName="Screen ratio">
+    
+    <include name="ratio32" ifArch="rg351p,amberelec-rg351p" displayName="3:2 (Default)">./aspect/3-2.xml</include>
+    <include name="ratio43" ifArch="rg353p,rg351mp,rg351v,amberelec-rg353p,amberelec-rg351mp,amberelec-rg351v" displayName="4:3 (Default)">./aspect/4-3.xml</include>
+    <include name="ratio53" ifArch="rg503,rg552,amberelec-rg503,amberelec-rg552" displayName="5:3 (Default)">./aspect/5-3.xml</include>
+
+    <include name="ratio32" ifNotArch="handheld,rg503,rg552,rg351p,rg353p,rg351mp,rg351v,amberelec-rg503,amberelec-rg552,amberelec-rg351p,amberelec-rg353p,amberelec-rg351mp,amberelec-rg351v" displayName="3:2">./aspect/3-2.xml</include>
+    <include name="ratio43" ifNotArch="handheld,rg503,rg552,rg351p,rg353p,rg351mp,rg351v,amberelec-rg503,amberelec-rg552,amberelec-rg351p,amberelec-rg353p,amberelec-rg351mp,amberelec-rg351v" displayName="4:3">./aspect/4-3.xml</include>
+    <include name="ratio53" ifNotArch="handheld,rg503,rg552,rg351p,rg353p,rg351mp,rg351v,amberelec-rg503,amberelec-rg552,amberelec-rg351p,amberelec-rg353p,amberelec-rg351mp,amberelec-rg351v" displayName="5:3">./aspect/5-3.xml</include>
+    
+    <include name="ratio11" displayName="1:1">./aspect/1-1.xml</include>
+    <include name="ratio32" displayName="3:2">./aspect/3-2.xml</include>
+    <include name="ratio43" displayName="4:3">./aspect/4-3.xml</include>
+    <include name="ratio53" displayName="5:3">./aspect/5-3.xml</include>
+  </subset>
+
+</theme>

@@ -1,0 +1,9 @@
+diff --git a/cmd/hwrev.c b/cmd/hwrev.c
+
+--- a/cmd/hwrev.c
++++ b/cmd/hwrev.c
+@@ -26,2 +26,3 @@ 
+-	if (check_range(146, 186, hwrev_adc)) {
++	//if (check_range(146, 186, hwrev_adc)) {
++	if (1) {
+ 		env_set("hwrev", "rg351mp");

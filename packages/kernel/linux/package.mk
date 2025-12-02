@@ -13,6 +13,7 @@ PKG_NEED_UNPACK="${LINUX_DEPENDS} $(get_pkg_directory busybox) ${PROJECT_DIR}/${
 PKG_LONGDESC="This package contains a precompiled kernel image and the modules."
 PKG_IS_KERNEL_PKG="yes"
 PKG_STAMP="${KERNEL_TARGET} ${KERNEL_MAKE_EXTRACMD} ${KERNEL_UBOOT_EXTRA_TARGET}"
+REEDIT_KERNEL_DIR="/home/li/RK3326/linux-6095faa02fa1b245a83c30d7a4097f8f354ddc32"
 
 PKG_VERSION="5.10.10"
 #PKG_SHA256=""
@@ -133,6 +134,7 @@ pre_make_target() {
 }
 
 make_target() {
+	
   kernel_make modules
   kernel_make INSTALL_MOD_PATH=${INSTALL}/$(get_kernel_overlay_dir) modules_install
   rm -f ${INSTALL}/$(get_kernel_overlay_dir)/lib/modules/*/build

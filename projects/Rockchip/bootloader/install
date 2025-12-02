@@ -24,6 +24,7 @@ if [ -n "$PKG_DATAFILE" -a -n "$PKG_LOADER" ]; then
 fi
 
 if [ -n "$PKG_LOAD_ADDR" ]; then
+	echo "wlz $PKG_RKBIN/tools/loaderimage --pack --uboot u-boot-dtb.bin uboot.img $PKG_LOAD_ADDR"
   $PKG_RKBIN/tools/loaderimage --pack --uboot u-boot-dtb.bin uboot.img $PKG_LOAD_ADDR
   cp -av uboot.img $INSTALL/usr/share/bootloader
 fi
@@ -63,7 +64,7 @@ if test \${hwrev} = 'xu10'; then
 elif test \${hwrev} = 'd007'; then
   sysboot mmc 1:1 any \${scriptaddr} /extlinux/rk3326-d007-linux.dtb.conf
 else
-  sysboot mmc 1:1 any \${scriptaddr} /extlinux/rk3326-rg351mp-linux.dtb.conf
+  sysboot mmc 1:1 any \${scriptaddr} /extlinux/rk3326-rppocket_v6_0-linux.dtb.conf
 fi
 
 EOF

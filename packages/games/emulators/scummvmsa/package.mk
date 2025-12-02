@@ -36,7 +36,7 @@ post_makeinstall_target() {
   fi
   
   mkdir -p ${INSTALL}/usr/config/distribution/modules/
-  cp "${PKG_DIR}/Scan ScummVM Games.sh" ${INSTALL}/usr/config/distribution/modules/
+  #cp "${PKG_DIR}/Scan ScummVM Games.sh" ${INSTALL}/usr/config/distribution/modules/
 
   mv ${INSTALL}/usr/local/bin ${INSTALL}/usr/
   cp -rf ${PKG_DIR}/scummvm.sh ${INSTALL}/usr/bin

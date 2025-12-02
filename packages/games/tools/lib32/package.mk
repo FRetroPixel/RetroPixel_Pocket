@@ -4,8 +4,10 @@
 PKG_NAME="lib32"
 PKG_VERSION="0cdc774e23f1a76f2058bbb478a83ab32da40731"
 PKG_ARCH="aarch64"
+
 PKG_SITE="https://github.com/AmberELEC/lib32"
 PKG_URL="${PKG_SITE}.git"
+
 PKG_DEPENDS_TARGET="toolchain"
 PKG_LONGDESC="ARM 32bit bundles for aarch64"
 PKG_TOOLCHAIN="manual"
@@ -13,6 +15,11 @@ PKG_TOOLCHAIN="manual"
 makeinstall_target() {
   mkdir -p ${INSTALL}/usr/lib32
   cd ${PKG_BUILD}
-  tar xvfz lib32_${DEVICE}.tar.gz
+  if [ "${DEVICE}" == "RPPOCKET" ]; then
+    tar xvfz lib32_RG351MP.tar.gz
+  else
+  	tar xvfz lib32_${DEVICE}.tar.gz
+  fi
+  
   cp -rfv usr/lib32/* ${INSTALL}/usr/lib32
 }

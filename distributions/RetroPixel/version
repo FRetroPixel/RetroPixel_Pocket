@@ -1,0 +1,8 @@
+# VERSION: set full version, use "devel" for development version
+  LIBREELEC_VERSION="20251127"
+
+# OS_VERSION: OS Version
+  OS_VERSION="2025.11"
+
+# ADDON_VERSION: Addon version
+  ADDON_VERSION="2025.11"

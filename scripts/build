@@ -6,10 +6,16 @@
 
 . config/options "${1}"
 
+#echo "build 传入参数:" ${1}
+
+#检查参数是否合法
+#echo "检查参数是否合法"
 if [ -z "${1}" ]; then
   die "usage: ${0} package_name[:<host|target|init|bootstrap>] [parent_pkg]"
 fi
 
+#批量构建的功能实现。它允许用户为所有已配置的构建目标，一次性触发某个特定包的构建。
+#echo "批量构建的功能实现"
 if [ "${1}" = "--all" ]; then
   if [ -n "${2}" ]; then
     for build_dir in $(ls -1d ${ROOT}/build.*); do
@@ -19,15 +25,21 @@ if [ "${1}" = "--all" ]; then
   exit 0
 fi
 
+#用于验证当前处理的包是否存在对应的 .mk 配置文件
+#echo "验证当前处理的包是否存在对应的 .mk 配置文件"
 if [ -z "${PKG_NAME}" ]; then
   die "$(print_color CLR_ERROR "${1}: no package.mk file found")"
 fi
 
+#包的架构兼容性检查
+#echo "兼容性检查"
 if [ -n "${PKG_ARCH}" ]; then
   listcontains "${PKG_ARCH}" "!${TARGET_ARCH}" && exit 0
   listcontains "${PKG_ARCH}" "${TARGET_ARCH}" || listcontains "${PKG_ARCH}" "any" || exit 0
 fi
 
+#参数处理与默认值设置逻辑
+#echo "参数处理"
 if [ "${1//:/}" != "${1}" ]; then
   TARGET="${1#*:}"
 else
@@ -36,26 +48,64 @@ fi
 TARGET="${TARGET:-target}"
 PARENT_PKG="${2:-${PKG_NAME}:${TARGET}}"
 
+#为某个包的构建操作创建一个锁
+#echo "构建操作创建锁"
 pkg_lock "${PKG_NAME}:${TARGET}" "build" "${PARENT_PKG}"
 
+
+#echo "创建文件夹" ${STAMPS} / ${PKG_NAME}
 mkdir -p ${STAMPS}/${PKG_NAME}
+
+#实现 ** 增量构建（Incremental Build）和可重现构建（Reproducible Build）** 的核心逻辑。
+#它通过一个 “构建标记文件”（Stamp File）来判断一个包是否需要重新构建
+#定义一个 “构建标记文件” 的路径。
+#如果该标记文件存在，则加载它。
+#计算当前包的 “深度哈希值”（一个代表所有构建输入状态的哈希）。
+#将当前计算的哈希值与标记文件中记录的旧哈希值进行比较。
+#如果哈希值和调试模式都匹配，说明构建输入没有变化，无需重新构建，脚本解锁并退出。
+#如果不匹配，说明构建输入已改变，需要重新构建，因此删除旧的标记文件
+
+#第 1 行：STAMP=${STAMPS}/${PKG_NAME}/build_${TARGET}
+#STAMP=：定义一个变量 STAMP，用于存储标记文件的完整路径。
+#${STAMPS}：一个预先定义的环境变量，指向构建系统中用于存放所有标记文件的根目录。
+#/${PKG_NAME}：为每个包创建一个单独的子目录，避免不同包的标记文件冲突。
+#/build_${TARGET}：标记文件本身的名称。
+#build_ 前缀明确指出这是 “构建” 阶段的标记。
+#${TARGET} 后缀（例如 host 或 target）用于区分同一个包在不同目标平台上的构建状态。
+#举例：如果 STAMPS=/path/to/stamps，PKG_NAME=zlib，TARGET=host，那么 STAMP 变量的值就是：/path/to/stamps/zlib/build_host
 STAMP=${STAMPS}/${PKG_NAME}/build_${TARGET}
+#echo "构建文件的完整路径/" $STAMP
+
+#检查 STAMP 变量所指向的文件是否存在且为一个普通文件
 if [ -f ${STAMP} ]; then
+  #echo "构建文件的路径已存在"
+  #加载标记文件的内容。这个标记文件通常不是一个脚本，而是一系列变量的定义。例如，它的内容可能看起来像这样
   . ${STAMP}
+  #计算 “深度哈希值”。
   PKG_DEEPHASH=$(calculate_stamp)
 
+  #比较当前计算的哈希值和上次构建时记录的哈希值 比较当前的调试模式和上次构建时的调试模式
   if [ "${PKG_DEEPHASH}" = "${STAMP_PKG_DEEPHASH}" -a "${BUILD_WITH_DEBUG}" = "${STAMP_BUILD_WITH_DEBUG}" ]; then
     # stamp matched: already built, do nothing
     pkg_lock_status "UNLOCK" "${PKG_NAME}:${TARGET}" "build" "already built"
+    echo "检测到存在的构建文件无需重新构建"
     exit 0
   fi
 
+  #如果不匹配重新构建
+  echo "检测到存在的构建文件需要重新构建"
   rm -f ${STAMP}
 fi
+echo "构建文件的路径不存在 需要重新构建"
 
+#解压和准备好当前包（${PKG_NAME}）的源代码，为后续的配置和编译步骤做准备
+echo "SCRIPTS:" ${SCRIPTS}
+echo "PKG_NAME:" ${PKG_NAME}
+echo "PKG_NPARENT_PKGAME:" ${PARENT_PKG}
 ${SCRIPTS}/unpack "${PKG_NAME}" "${PARENT_PKG}"
 
 # build dependencies, only when PKG_DEPENDS_? is filled
+# 根据当前的构建目标（TARGET），找到对应的依赖包列表，然后逐一构建这些依赖包
 unset _pkg_depends
 case "${TARGET}" in
   "target") _pkg_depends="${PKG_DEPENDS_TARGET}";;
@@ -68,6 +118,8 @@ for p in ${_pkg_depends}; do
 done
 
 # virtual packages are not built as they only contain dependencies, so dont go further here
+#构建系统中处理 **“虚拟包”（Virtual Packages）** 的逻辑。
+#虚拟包本身不包含任何需要编译的源代码，它的唯一作用是定义一组依赖关系
 if [ "${PKG_SECTION}" = "virtual" ]; then
   PKG_DEEPHASH=$(calculate_stamp)
   for i in PKG_NAME PKG_DEEPHASH BUILD_WITH_DEBUG; do
@@ -75,19 +127,25 @@ if [ "${PKG_SECTION}" = "virtual" ]; then
   done
 
   pkg_lock_status "UNLOCK" "${PKG_NAME}:${TARGET}" "build" "built"
+  echo "PKG_SECTION 为 virtual 退出 build"
   exit 0
 fi
 
 # build this package
+# 编译包
 if [ "${BUILD_WITH_DEBUG}" = "yes" ]; then
+  echo "DEBUG编译模式"
   build_msg "CLR_BUILD" "BUILD" "${PKG_NAME} $(print_color "CLR_TARGET" "(${TARGET})") [DEBUG]" "indent"
 else
+  echo "常规编译模式"
   build_msg "CLR_BUILD" "BUILD" "${PKG_NAME} $(print_color "CLR_TARGET" "(${TARGET})")" "indent"
 fi
 
+echo "设定编译工具"
 setup_toolchain ${TARGET}
 
 # configure install directory
+# 根据当前的构建目标（TARGET），来设置或清空 INSTALL 环境变量，从而决定后续安装操作的目的地
 if [ "${TARGET}" = "target" ]; then
   INSTALL="${PKG_BUILD}/.install_pkg"
 elif [ "${TARGET}" = "init" ]; then
@@ -95,12 +153,18 @@ elif [ "${TARGET}" = "init" ]; then
 else
   unset INSTALL
 fi
+echo "INSTALL最终目录:" ${INSTALL}
+
 # remove previous install files
+# 移除已经产生的安装文件
+echo "移除已经产生的安装文件"
 if [ -n "${INSTALL}" -a -d "${INSTALL}" ]; then
   rm -rf "${INSTALL}"
 fi
 
 # configure debug build defaults
+# 配置调试模式下的默认设定
+echo "配置调试模式下的默认设定"
 if [ "${BUILD_WITH_DEBUG}" = "yes" ]; then
   CMAKE_BUILD_TYPE="Debug"
   MESON_BUILD_TYPE="debug"
@@ -181,6 +245,7 @@ PKG_CMAKE_SCRIPT="${PKG_CMAKE_SCRIPT:-${PKG_BUILD}/CMakeLists.txt}"
 PKG_MESON_SCRIPT="${PKG_MESON_SCRIPT:-${PKG_BUILD}/meson.build}"
 
 # auto detect toolchain
+echo "自动配置工具链"
 _auto_toolchain=""
 if [ -z "${PKG_TOOLCHAIN}" -o "${PKG_TOOLCHAIN}" = "auto" ]; then
   if [ -f "${PKG_MESON_SCRIPT}" ]; then
@@ -196,22 +261,28 @@ if [ -z "${PKG_TOOLCHAIN}" -o "${PKG_TOOLCHAIN}" = "auto" ]; then
   fi
   _auto_toolchain=" (auto-detect)"
 fi
+
 if ! listcontains "meson cmake cmake-make configure ninja make autotools manual" "${PKG_TOOLCHAIN}"; then
   die "$(print_color "CLR_ERROR" "ERROR:") unknown toolchain ${PKG_TOOLCHAIN}"
 fi
 build_msg "CLR_TOOLCHAIN" "TOOLCHAIN" "${PKG_TOOLCHAIN}${_auto_toolchain}"
 
 # make autoreconf
+echo "make 脚本自动配置"
+echo "SCRIPTS/autoreconf PKG_NAME PARENT_PKG" ${SCRIPTS} ${PKG_NAME} ${PARENT_PKG}
 if [ "${PKG_TOOLCHAIN}" = "autotools" ]; then
   ${SCRIPTS}/autoreconf "${PKG_NAME}" "${PARENT_PKG}"
 fi
 
+#锁定编译需要的配置文件
 pkg_lock_status "ACTIVE" "${PKG_NAME}:${TARGET}" "build"
 
 # include build template and build
+echo "PKG回调安装配置和运行"
 pkg_call_exists pre_build_${TARGET} && pkg_call pre_build_${TARGET}
 
 # ensure ${PKG_BUILD} is there. (installer? PKG_URL="")
+echo "创建PKG_BUILD存放目录" ${PKG_BUILD}
 mkdir -p "${PKG_BUILD}"
 
 cd "${PKG_BUILD}"
@@ -231,6 +302,7 @@ fi
 
 # create wrapper scripts in build dir and use them for CC/CXX when
 # building for host and local-cc build flag is set
+echo "编译主机local-cc"
 if [ "${TARGET}" = "host" ] && flag_enabled "local-cc" "no"; then
   cat > libreelec-local-cc << EOF
 #!/bin/sh
@@ -247,8 +319,10 @@ EOF
 fi
 
 # configure
+echo "配置PKG configure"
 pkg_call_exists pre_configure && pkg_call pre_configure
 pkg_call_exists pre_configure_${TARGET} && pkg_call pre_configure_${TARGET}
+
 
 if pkg_call_exists configure_${TARGET}; then
   pkg_call configure_${TARGET}
@@ -335,7 +409,9 @@ fi
 pkg_call_exists post_configure_${TARGET} && pkg_call post_configure_${TARGET}
 
 # make
+echo "开始执行make"
 pkg_call_exists pre_make_${TARGET} && pkg_call pre_make_${TARGET}
+echo "make执行完毕"
 
 if pkg_call_exists make_${TARGET}; then
   pkg_call make_${TARGET}
@@ -379,25 +455,32 @@ else
   esac
 fi
 
+echo "执行 post_make 环节"
 pkg_call_exists post_make_${TARGET} && pkg_call post_make_${TARGET}
 
 # Hack around directly writing/modifying the content of a shared sysroot
 # by temporarily installing new files to a package specific sysroot
+echo "导出系统环境变量"
 PKG_ORIG_SYSROOT_PREFIX="${SYSROOT_PREFIX}"
 export SYSROOT_PREFIX="${BUILD}/.sysroot/${PKG_NAME}.${TARGET}"
 rm -rf "${SYSROOT_PREFIX}"
 
 # Create common sysroot directories as some packages expect them to exist.
 # TODO: Fix those packages so we don't need to pre-create directories.
+echo "注册 SYSROOT pkgconfig"
 for d in /usr/lib /usr/include /usr/bin /usr/lib/pkgconfig; do
   mkdir -p "${SYSROOT_PREFIX}${d}"
 done
 
 # make install
+echo "pre_makeinstall 环节"
 pkg_call_exists pre_makeinstall_${TARGET} && pkg_call pre_makeinstall_${TARGET}
 
+echo "makeinstall 环节"
 if pkg_call_exists makeinstall_${TARGET}; then
+  echo "检测到有默认makeinstall函数直接调用"
   pkg_call makeinstall_${TARGET}
+  echo "调用makeinstall函数完毕"
 else
   case "${PKG_TOOLCHAIN}:${TARGET}" in
     # ninja based builds
@@ -432,6 +515,7 @@ else
   esac
 fi
 
+echo "post_makeinstall 环节"
 pkg_call_exists post_makeinstall_${TARGET} && pkg_call post_makeinstall_${TARGET}
 
 # Fixup temporary sysroot references to the shared sysroot
@@ -513,3 +597,5 @@ for i in PKG_NAME PKG_DEEPHASH BUILD_WITH_DEBUG; do
 done
 
 pkg_lock_status "UNLOCK" "${PKG_NAME}:${TARGET}" "build" "built"
+
+echo "build 结束运行"

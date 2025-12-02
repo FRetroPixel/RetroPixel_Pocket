@@ -515,10 +515,10 @@ def set_settings(rom_name: str, core: str, platform: str, controllers: str, auto
             'wonderswan': (16, 16, 448, 288),      # x2
             'wonderswancolor': (16, 16, 448, 288), # x2
         }
-    elif device_name == "RG351V" or device_name == "RG351MP":
+    elif device_name == "RG351V" or device_name == "RG351MP" or device_name == "RPPOCKET":
         system_viewport = {
             'standard': (1, 1, 639, 479),          # max-1
-            'gb': (80, 24, 480, 432),              # x3
+            'gb': (0, 36, 720, 648),              # x3
             'gbh': (80, 24, 480, 432),             # x3
             'gbc': (80, 24, 480, 432),             # x3
             'gbch': (80, 24, 480, 432),            # x3
@@ -633,20 +633,31 @@ def set_settings(rom_name: str, core: str, platform: str, controllers: str, auto
 
     if bezel_cfg is not None:
         logger.log('using bezel')
-        # configure bezel
+        # configure bezel  false
         ra_append_dict['input_overlay_enable'] = 'true'
+       # ra_append_dict['input_overlay_enable'] = 'false'
         ra_append_dict['input_overlay'] = bezel_cfg
         ra_append_dict['input_overlay_hide_in_menu'] = 'true'
         ra_append_dict['input_overlay_opacity'] = '1.000000'
         ra_append_dict['input_overlay_show_inputs'] = '2'
         ra_append_dict['video_scale_integer'] = 'false'
+       # ra_append_dict['video_scale_integer'] = 'true'
+     
         ra_append_dict['aspect_ratio_index'] = '23'
+       # ra_append_dict['aspect_ratio_index'] = '22'
+        
         # configure custom scaling
         # needs some grouping to reflect the hack systems as well (i. e. gb=gb, gbh, gbc and gbch)
+       
         ra_append_dict['custom_viewport_x'] = system_viewport[platform][0]
         ra_append_dict['custom_viewport_y'] = system_viewport[platform][1]
         ra_append_dict['custom_viewport_width'] = system_viewport[platform][2]
         ra_append_dict['custom_viewport_height'] = system_viewport[platform][3]
+        
+       # ra_append_dict['custom_viewport_x'] = system_viewport['standard'][0]
+       # ra_append_dict['custom_viewport_y'] = system_viewport['standard'][1]
+       # ra_append_dict['custom_viewport_width'] = system_viewport['standard'][2]
+       # ra_append_dict['custom_viewport_height'] = system_viewport['standard'][3]
     else:
         logger.log('not using bezel')
         # disable decorations

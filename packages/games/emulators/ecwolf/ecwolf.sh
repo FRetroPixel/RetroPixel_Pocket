@@ -58,7 +58,8 @@ fi
 if [[ "$EE_DEVICE" == RG351P ]]; then
   params+=" --res 480 320"
 fi
-if [[ "$EE_DEVICE" == RG351V ]] || [[ "$EE_DEVICE" == RG351MP ]]; then
+#wlz
+if [[ "$EE_DEVICE" == RG351V ]] || [[ "$EE_DEVICE" == RG351MP ]] || [[ "$EE_DEVICE" == RPPOCKET ]]; then
   params+=" --res 640 480"
 fi
 

@@ -1,0 +1,110 @@
+<!--
+  Theme: Albedo
+  Author: mluizvitor
+-->
+
+<theme>
+  <formatVersion>7</formatVersion>
+
+  <include>./settings/langs/en.xml</include>
+  <include lang="es">./settings/langs/es.xml</include>
+  <include lang="pt">./settings/langs/pt.xml</include>
+
+  <subset name="colorScheme" displayName="${string.settings.colorSchemeTitle}">
+    <include name="blue" displayName="${string.settings.color.blue}">./settings/colors/blue.xml</include>
+    <include name="purple" displayName="${string.settings.color.purple}">./settings/colors/purple.xml</include>
+    <include name="pink" displayName="${string.settings.color.pink}">./settings/colors/pink.xml</include>
+    <include name="red" displayName="${string.settings.color.red}">./settings/colors/red.xml</include>
+    <include name="orange" displayName="${string.settings.color.orange}">./settings/colors/orange.xml</include>
+    <include name="yellow" displayName="${string.settings.color.yellow}">./settings/colors/yellow.xml</include>
+    <include name="green" displayName="${string.settings.color.green}">./settings/colors/green.xml</include>
+    <include name="teal" displayName="${string.settings.color.teal}">./settings/colors/teal.xml</include>
+    <include name="gray" displayName="${string.settings.color.gray}">./settings/colors/gray.xml</include>
+    <include name="brown" displayName="${string.settings.color.beige}">./settings/colors/brown.xml</include>
+  </subset>
+
+  <subset name="FontSize" displayName="${string.settings.fontSize}">
+    <include name="medium" displayName="${string.settings.fontSize.medium}" />
+    <include name="large" displayName="${string.settings.fontSize.large}" />
+    <include name="small" displayName="${string.settings.fontSize.small}" />
+  </subset>
+
+  <subset name="Background Source" displayName="${string.settings.backgroundEntry}">
+    <include name="videoBg" displayName="${string.settings.backgroundEntry.videoBg}" />
+    <include name="defaultBg" displayName="${string.settings.backgroundEntry.defaultBg}" />
+    <include name="randomBg" displayName="${string.settings.backgroundEntry.randomBg}" />
+    <include name="customBg" displayName="${string.settings.backgroundEntry.customBg}" />
+  </subset>
+
+  <subset name="GameListBGStyle" displayName="${string.settings.gamelistBackgroundStyle}">
+    <include name="bgBlurred" displayName="${string.settings.gamelistBackgroundStyle.blurred}"/>
+    <include name="bgNormal" displayName="${string.settings.gamelistBackgroundStyle.normal}"/>
+    <include name="bgNone" displayName="${string.settings.gamelistBackgroundStyle.none}"/>
+  </subset>
+
+  <subset name="Background" displayName="${string.settings.backgroundStyle}">
+    <include name="bgScanlines" displayName="${string.settings.backgroundStyle.scanlines}" />
+    <include name="bgClean" displayName="${string.settings.backgroundStyle.clean}" />
+  </subset>
+
+  <subset name="StatusBar" displayName="${string.settings.statusBar}">
+    <include name="statusComplete"
+      displayName="${string.settings.clock} + ${string.settings.battery}" />
+    <include name="statusClock" displayName="${string.settings.clock}" />
+    <include name="statusBattery" displayName="${string.settings.battery}" />
+    <include name="statusHidden" displayName="${string.settings.hidden}" />
+  </subset>
+
+  <subset name="Date Format" displayName="${string.settings.dateFormat}" appliesTo="detailed, grid">
+    <include name="y-m-d" displayName="YYYY/MM/DD" />
+    <include name="m-d-y" displayName="MM/DD/YYYY" />
+    <include name="d-m-y" displayName="DD/MM/YYYY" />
+  </subset>
+
+  <subset name="DefaultGridIconsRatio" displayName="${string.settings.gridIconRatio}"
+    appliesTo="grid">
+    <include name="1-1" displayName="${string.settings.gridIconRatio.square}" />
+    <include name="2-3" displayName="2:3 (Steam)" />
+    <include name="tip" displayName="${string.settings.gridIconRatio.tip}" />
+  </subset>
+
+  <subset name="GridImage" displayName="${string.settings.imageSource}" appliesTo="grid">
+    <include name="gridscreenshot" displayName="${string.imageSource.image}" />
+    <include name="gridthumbnail" displayName="${string.imageSource.thumbnail}" />
+  </subset>
+
+  <subset name="gridImageStyle" displayName="${string.gridImageStyle}" appliesTo="grid">
+    <include name="cover" displayName="${string.gridImageStyle.cover}" />
+    <include name="fit" displayName="${string.gridImageStyle.fit}" />
+    <include name="stretch" displayName="${string.gridImageStyle.stretch}" />
+  </subset>
+
+  <subset name="Ratio" displayName="${string.settings.screenRatio}">
+    <include ifArch="rg351p,amberelec-rg351p" name="3-2" displayName="3:2 (${string.default})" />
+    <include ifArch="rg353p,rg351mp,rg351v,amberelec-rg353p,amberelec-rg351mp,amberelec-rg351v" name="16-9" displayName="16:9 (${string.default})" />
+    <include ifArch="rg503,rg552,amberelec-rg503,amberelec-rg552" name="5-3" displayName="5:3 (${string.default})" />
+
+    <include ifNotArch="handheld,rg503,rg552,rg351p,rg353p,rg351mp,rg351v,amberelec-rg503,amberelec-rg552,amberelec-rg351p,amberelec-rg353p,amberelec-rg351mp,amberelec-rg351v" name="3-2" displayName="3:2" />
+    <include ifNotArch="handheld,rg503,rg552,rg351p,rg353p,rg351mp,rg351v,amberelec-rg503,amberelec-rg552,amberelec-rg351p,amberelec-rg353p,amberelec-rg351mp,amberelec-rg351v" name="4-3" displayName="4:3" />
+    <include ifNotArch="handheld,rg503,rg552,rg351p,rg353p,rg351mp,rg351v,amberelec-rg503,amberelec-rg552,amberelec-rg351p,amberelec-rg353p,amberelec-rg351mp,amberelec-rg351v" name="5-3" displayName="5:3" />
+       <include ifNotArch="handheld,rg503,rg552,rg351p,rg353p,rg351mp,rg351v,amberelec-rg503,amberelec-rg552,amberelec-rg351p,amberelec-rg353p,amberelec-rg351mp,amberelec-rg351v" name="16-9" displayName="16:9" />
+
+    <include name="3-2" displayName="3:2" />
+    <include name="4-3" displayName="4:3" />
+    <include name="5-3" displayName="5:3" />
+    <!-- <include name="16-9" displayName="16:9" /> -->
+    <include name="16-9" displayName="16:9" />
+  </subset>
+
+  <include>./settings/variables/general.xml</include>
+  <include ifSubset="Ratio:5-3">./settings/variables/ratio53.xml</include>
+
+  <include>./settings/display/view-general.xml</include>
+  <include>./settings/display/view-system.xml</include>
+  <include>./settings/display/view-menu.xml</include>
+  <include>./settings/display/view-basic.xml</include>
+  <include>./settings/display/view-detailed-video.xml</include>
+  <include>./settings/display/view-grid.xml</include>
+  <include>./settings/sound.xml</include>
+
+</theme>

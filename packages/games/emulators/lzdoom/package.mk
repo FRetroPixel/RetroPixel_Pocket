@@ -2,15 +2,19 @@
 # Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="lzdoom"
-PKG_VERSION="8e12e62164ea1ba52625c63bc0f1c9e0076bff4c"
+PKG_VERSION="4651030292c2af052159eb868761011a4abf7231"
 PKG_LICENSE="GPL"
-PKG_SITE="https://github.com/AmberELEC/lzdoom"
-PKG_URL="${PKG_SITE}.git"
+#PKG_SITE="https://github.com/AmberELEC/lzdoom"
+#PKG_URL="${PKG_SITE}.git"
+
+PKG_SITE="file://${OLDPWD}/extpackage/lzdoom-4651030292c2af052159eb868761011a4abf7231"
+PKG_URL="${PKG_SITE}"
 PKG_DEPENDS_TARGET="toolchain SDL2 lzdoom:host"
 PKG_LONGDESC="ZDoom is a family of enhanced ports of the Doom engine for running on modern operating systems. It runs on Windows, Linux, and OS X, and adds new features not found in the games as originally published by id Software."
 PKG_TOOLCHAIN="cmake-make"
 
-if [ "${DEVICE}" = "RG351MP" ] || [ "${DEVICE}" = "RG552" ]
+#wlz
+if [ "${DEVICE}" = "RG351MP" ] || [ "${DEVICE}" = "RG552" ] || [ "${DEVICE}" = "RPPOCKET" ]
 then
   PKG_PATCH_DIRS="RG351MP"
 fi
@@ -49,7 +53,8 @@ makeinstall_target() {
   cp ${PKG_BUILD}/.${TARGET_NAME}/lzdoom ${INSTALL}/usr/bin
 
   mkdir -p ${INSTALL}/usr/config/distribution/lzdoom
-  if [ "${DEVICE}" = "RG351MP" ] || [ "${DEVICE}" = "RG552" ]; then
+  #wlz
+  if [ "${DEVICE}" = "RG351MP" ] || [ "${DEVICE}" = "RG552" ] || [ "${DEVICE}" = "RPPOCKET" ]; then
     cp ${PKG_DIR}/config/RG351MP/* ${INSTALL}/usr/config/distribution/lzdoom
   else
     cp ${PKG_DIR}/config/RG351P/* ${INSTALL}/usr/config/distribution/lzdoom

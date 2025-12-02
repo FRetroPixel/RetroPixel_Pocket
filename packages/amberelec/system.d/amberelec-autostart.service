@@ -11,3 +11,4 @@ RemainAfterExit=yes
 
 [Install]
 WantedBy=amberelec.target
+

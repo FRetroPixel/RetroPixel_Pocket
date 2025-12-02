@@ -2,9 +2,14 @@
 # Copyright (C) 2021-present AmberELEC (https://github.com/AmberELEC)
 
 PKG_NAME="retroarch"
-PKG_VERSION="06fa5325f8b3cd42e6fba3d57835d5924c9ea2e7"
-PKG_SITE="https://github.com/libretro/RetroArch"
-PKG_URL="${PKG_SITE}.git"
+PKG_VERSION="864ad02177e5e39c9951082e127efcc6a693b1e5"
+#PKG_SITE="https://github.com/FRetroPixel/retroarch"
+#PKG_URL="${PKG_SITE}.git"
+
+#PKG_SITE="file:///home/li/RK3326/AmberELEC/sources/retroarch/retroarch-864ad02177e5e39c9951082e127efcc6a693b1e5"
+PKG_SITE="file://${OLDPWD}/extpackage/retroarch-864ad02177e5e39c9951082e127efcc6a693b1e5"
+PKG_URL="${PKG_SITE}"
+
 PKG_LICENSE="GPLv3"
 PKG_DEPENDS_TARGET="toolchain SDL2 alsa-lib openssl freetype zlib retroarch-assets core-info ffmpeg libass joyutils empty ${OPENGLES} nss-mdns openal-soft libogg libvorbis libvorbisidec libvpx libpng libdrm librga pulseaudio flac"
 PKG_LONGDESC="Reference frontend for the libretro API."
@@ -56,7 +61,7 @@ pre_configure_target() {
 }
 
 make_target() {
-  make HAVE_LIBRETRODB=1 HAVE_NETWORKING=1 HAVE_LAKKA=1 HAVE_ZARCH=1 HAVE_QT=0 HAVE_LANGEXTRA=1
+  make HAVE_LIBRETRODB=1 HAVE_NETWORKING=1 HAVE_LAKKA=1 HAVE_ZARCH=1 HAVE_QT=0 HAVE_LANGEXTRA=1 HAVE_LAKKA_PROJECT=0 HAVE_LAKKA_SERVER=0
   [ $? -eq 0 ] && echo "(retroarch ok)" || { echo "(retroarch failed)" ; exit 1 ; }
   make -C gfx/video_filters compiler=${CC} extra_flags="${CFLAGS}"
   [ $? -eq 0 ] && echo "(video filters ok)" || { echo "(video filters failed)" ; exit 1 ; }
@@ -84,6 +89,12 @@ makeinstall_target() {
   # General configuration
   mkdir -p ${INSTALL}/usr/config/retroarch/
   cp -rf ${PKG_DIR}/sources/* ${INSTALL}/usr/config/retroarch/
+  
+  #other config file
+  #Game Boy
+  #mkdir -p ${INSTALL}/usr/config/retroarch/config
+  #mkdir -p ${INSTALL}/usr/config/retroarch/config/Gambatte
+  #cp /home/li/桌面/Program/AmberELEC-Retroarch-config/Gamebatte/* ${INSTALL}/usr/config/retroarch/config/Gambatte
 }
 
 post_install() {

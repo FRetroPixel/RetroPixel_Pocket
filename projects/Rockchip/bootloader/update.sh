@@ -67,7 +67,11 @@ if [ -f $SYSTEM_ROOT/usr/share/bootloader/boot.ini ]; then
   echo "Updating boot.ini..."
   cp -p $SYSTEM_ROOT/usr/share/bootloader/boot.ini $BOOT_ROOT/boot.ini &>/dev/null
 fi
-
+if [ -f $SYSTEM_ROOT/usr/share/bootloader/logo.bmp ]; then
+    echo -n "Updating uboot logo... "
+    cp -p $SYSTEM_ROOT/usr/share/bootloader/logo.bmp $BOOT_ROOT &>/dev/null
+    echo "done"
+  fi
 # update device tree
   for all_dtb in $SYSTEM_ROOT/usr/share/bootloader/*.dtb; do
     dtb=$(basename $all_dtb)
@@ -75,7 +79,15 @@ fi
       cp -p $SYSTEM_ROOT/usr/share/bootloader/$dtb $BOOT_ROOT &>/dev/null
       echo "done"
   done
-
+   echo "aaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+   echo "aaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+   echo "aaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+   echo "aaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+   echo "aaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+   echo "aaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+   echo "aaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+   echo "aaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+echo "BOOT_DISK"
 # update bootloader
   if [ -f $SYSTEM_ROOT/usr/share/bootloader/idbloader.img ]; then
     echo -n "Updating idbloader.img... "
@@ -90,6 +102,18 @@ fi
   if [ -f $SYSTEM_ROOT/usr/share/bootloader/trust.img ]; then
     echo -n "Updating trust.img... "
     dd if=$SYSTEM_ROOT/usr/share/bootloader/trust.img of=$BOOT_DISK bs=64k seek=192 conv=fsync &>/dev/null
+     # dd if=$SYSTEM_ROOT/usr/share/bootloader/cc.img of=$BOOT_DISK bs=64k seek=242 conv=fsync &>/dev/null
+    echo "done"
+  fi
+   if [ -f $SYSTEM_ROOT/usr/share/bootloader/logo.bmp ]; then
+    echo -n "Updating uboot logo... "
+    cp -p $SYSTEM_ROOT/usr/share/bootloader/logo.bmp $BOOT_ROOT &>/dev/null
+    cp -p $SYSTEM_ROOT/usr/share/bootloader/battery_0.bmp $BOOT_ROOT &>/dev/null
+    cp -p $SYSTEM_ROOT/usr/share/bootloader/battery_1.bmp $BOOT_ROOT &>/dev/null
+    cp -p $SYSTEM_ROOT/usr/share/bootloader/battery_2.bmp $BOOT_ROOT &>/dev/null
+    cp -p $SYSTEM_ROOT/usr/share/bootloader/battery_3.bmp $BOOT_ROOT &>/dev/null
+    cp -p $SYSTEM_ROOT/usr/share/bootloader/battery_fail.bmp $BOOT_ROOT &>/dev/null
+    
     echo "done"
   fi
 

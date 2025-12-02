@@ -2,11 +2,16 @@
 # Copyright (C) 2022-present AmberELEC (https://github.com/AmberELEC)
 
 PKG_NAME="mame2015"
-PKG_VERSION="316cd06349f2b34b4719f04f7c0d07569a74c764"
-PKG_SHA256="45c5bda01876545c5a2b39ec700baab43c34ce38ab710e14abe14aae3b33afc4"
+PKG_VERSION="2599c8aeaf84f62fe16ea00daa460a19298c121c"
+#PKG_SHA256="45c5bda01876545c5a2b39ec700baab43c34ce38ab710e14abe14aae3b33afc4"
 PKG_LICENSE="GPLv2"
-PKG_SITE="https://github.com/libretro/mame2015-libretro"
-PKG_URL="${PKG_SITE}/archive/${PKG_VERSION}.tar.gz"
+
+#PKG_SITE="https://github.com/libretro/mame2015-libretro"
+#PKG_URL="${PKG_SITE}/archive/${PKG_VERSION}.tar.gz"
+
+PKG_SITE="file://${OLDPWD}/extpackage/mame2015-2599c8aeaf84f62fe16ea00daa460a19298c121c"
+PKG_URL="${PKG_SITE}"
+
 PKG_DEPENDS_TARGET="toolchain"
 PKG_LONGDESC="Late 2014/Early 2015 version of MAME (0.160-ish) for libretro. Compatible with MAME 0.160 romsets."
 PKG_TOOLCHAIN="make"

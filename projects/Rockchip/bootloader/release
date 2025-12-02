@@ -14,7 +14,17 @@ mkdir -p $RELEASE_DIR/3rdparty/bootloader
       cp -a $BOOTLOADER_DIR/trust.img $RELEASE_DIR/3rdparty/bootloader
     fi
   fi
-
+ if [ -f $INSTALL/usr/share/bootloader/logo.bmp ]; then
+ 
+#    cp -a $INSTALL/usr/share/bootloader/logo.bmp $RELEASE_DIR/3rdparty/bootloader
+		cp -a /home/li/图片/logo-boot.bmp $RELEASE_DIR/3rdparty/bootloader/logo.bmp
+    cp -a $INSTALL/usr/share/bootloader/battery_0.bmp $RELEASE_DIR/3rdparty/bootloader
+    cp -a $INSTALL/usr/share/bootloader/battery_1.bmp $RELEASE_DIR/3rdparty/bootloader
+    cp -a $INSTALL/usr/share/bootloader/battery_2.bmp $RELEASE_DIR/3rdparty/bootloader
+    cp -a $INSTALL/usr/share/bootloader/battery_3.bmp $RELEASE_DIR/3rdparty/bootloader
+    cp -a $INSTALL/usr/share/bootloader/battery_fail.bmp $RELEASE_DIR/3rdparty/bootloader
+    
+  fi
   if [ -f $INSTALL/usr/share/bootloader/boot.ini ]; then
     cp -a $INSTALL/usr/share/bootloader/boot.ini $RELEASE_DIR/3rdparty/bootloader
   fi
@@ -32,6 +42,8 @@ mkdir -p $RELEASE_DIR/3rdparty/bootloader
     cp -f $UBOOT_DTS_DIR/rg351v-uboot.dtb $RELEASE_DIR/3rdparty/bootloader
   elif [ "$DEVICE" == "RG351MP" ]; then
     cp -f $UBOOT_DTS_DIR/rg351mp-uboot.dtb $RELEASE_DIR/3rdparty/bootloader
+  elif [ "$DEVICE" == "RPPOCKET" ]; then
+    cp -f $UBOOT_DTS_DIR/rppocket-uboot.dtb $RELEASE_DIR/3rdparty/bootloader
   fi
   
 LE_TMP=$(mktemp -d)

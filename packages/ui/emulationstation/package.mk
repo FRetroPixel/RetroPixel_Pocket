@@ -4,16 +4,30 @@
 # Copyright (C) 2021-present AmberELEC (https://github.com/AmberELEC)
 
 PKG_NAME="emulationstation"
-PKG_VERSION="833b02288227f54e11d078483bcb230a4427c737"
+#PKG_VERSION="4111537f3d69f22016f23ae40d12a346c822d7d6"
+PKG_VERSION="5d0e295a05ee2b83e4aa741a2b275aa0b5c79f18"
+#PKG_VERSION="bbca44a9f1ef79ee92b115ab45af808aca0e4703"
+#PKG_VERSION="04aae4dc49622b0d21754c6f28cdb498d55f559c"
 PKG_GIT_CLONE_BRANCH="main"
 PKG_LICENSE="GPL"
-PKG_SITE="https://github.com/AmberELEC/emulationstation"
-PKG_URL="${PKG_SITE}.git"
+
+#PKG_SITE="https://github.com/FRetroPixel/emulationstation"
+#PKG_URL="${PKG_SITE}.git"
+
+PKG_SITE="file://${OLDPWD}/extpackage/emulationstation-5d0e295a05ee2b83e4aa741a2b275aa0b5c79f18"
+PKG_URL="${PKG_SITE}"
+
 PKG_DEPENDS_TARGET="boost toolchain SDL2 freetype curl freeimage bash rapidjson ${OPENGLES} SDL2_mixer fping p7zip vlc zstd"
 PKG_NEED_UNPACK="busybox"
 PKG_LONGDESC="Emulationstation emulator frontend"
 PKG_BUILD_FLAGS="+lto-parallel"
 
+#PKG_SITE="file:///home/li/RK3326/AmberELEC/sources/emulationstation/emulationstation-04aae4dc49622b0d21754c6f28cdb498d55f559c"
+#PKG_URL="${PKG_SITE}"
+#PKG_SITE="file:///home/li/RK3326/AmberELEC/sources/emulationstation/emulationstation-5d0e295a05ee2b83e4aa741a2b275aa0b5c79f18"
+#PKG_URL="${PKG_SITE}"
+#PKG_SITE="file:///home/li/RK3326/AmberELEC/sources/emulationstation/emulationstation-4111537f3d69f22016f23ae40d12a346c822d7d6"
+#PKG_URL="${PKG_SITE}"
 ##########################################################################################################
 # Uncomment the following lines (PKG_SITE, PKG_URL) to build locally from a git clone
 # of emulationstation in your work directory.  Works with docker too if it's in the work directory.

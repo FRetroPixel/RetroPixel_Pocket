@@ -11,9 +11,10 @@ PKG_TOOLCHAIN="manual"
 
 makeinstall_target() {
   mkdir -p ${INSTALL}/usr/share/drastic/config/
+  #wlz
   if [[ "${DEVICE}" == RG351P ]]; then
     cp -rf ${PKG_DIR}/config/RG351P/drastic.cfg ${INSTALL}/usr/share/drastic/config/
-  elif [[ "${DEVICE}" == RG351MP ]] || [[ "${DEVICE}" == RG552 ]]; then
+  elif [[ "${DEVICE}" == RG351MP ]] || [[ "${DEVICE}" == RG552 ]] || [[ "${DEVICE}" == RPPOCKET ]]; then
     cp -rf ${PKG_DIR}/config/RG351MP/drastic.cfg ${INSTALL}/usr/share/drastic/config/
   else
     cp -rf ${PKG_DIR}/config/RG351V/drastic.cfg ${INSTALL}/usr/share/drastic/config/

@@ -1,0 +1,22 @@
+<!--
+  Theme: Albedo
+  Author: mluizvitor
+-->
+
+<theme>
+  <formatVersion>7</formatVersion>
+
+  <view name="basic, detailed, grid, video, system">
+    <textlist name="gamelist">
+      <scrollSound>./assets/sounds/sound1.wav</scrollSound>
+    </textlist>
+
+    <gamelist name="gamegrid">
+      <scrollSound>./assets/sounds/sound1.wav</scrollSound>
+    </gamelist>
+
+    <carousel name="systemcarousel">
+      <scrollSound>./assets/sounds/sound1.wav</scrollSound>
+    </carousel>
+  </view>
+</theme>

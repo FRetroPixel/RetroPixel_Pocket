@@ -1,0 +1,19 @@
+<!--
+  Theme: Albedo
+  Author: mluizvitor
+-->
+
+<theme>
+  <formatVersion>7</formatVersion>
+
+  <variables>
+    <fontSizeH1-medium>0.0625</fontSizeH1-medium> <!-- 20 -->
+    <fontSizeH2-medium>0.05625</fontSizeH2-medium> <!-- 18 -->
+    
+    <fontSizeH1-small>0.05625</fontSizeH1-small> <!-- 18 -->
+    <fontSizeH2-small>0.05</fontSizeH2-small> <!-- 16 -->
+    
+    <fontSizeH1-large>0.06875</fontSizeH1-large> <!-- 22 -->
+    <fontSizeH2-large>0.0625</fontSizeH2-large> <!-- 20 -->
+  </variables>
+</theme>

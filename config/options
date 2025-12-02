@@ -20,6 +20,8 @@ ROOT="${PWD}"
 DISTRO_DIR="${ROOT}/distributions"
 PROJECT_DIR="${ROOT}/projects"
 
+
+
 # determines DISTRO, if not forced by user
 DISTRO="${DISTRO:-AmberELEC}"
 
@@ -53,12 +55,16 @@ if [ -f "${PROJECT_DIR}/${PROJECT}/devices/${DEVICE}/options" ]; then
   . "${PROJECT_DIR}/${PROJECT}/devices/${DEVICE}/options"
 fi
 
+
+
 # projects can set KERNEL_NAME (kernel.img)
 KERNEL_NAME="${KERNEL_NAME:-KERNEL}"
 
 LINUX_DEPENDS="${PROJECT_DIR}/${PROJECT}/linux ${PROJECT_DIR}/${PROJECT}/patches/linux ${PROJECT_DIR}/${PROJECT}/packages/linux ${ROOT}/packages/linux"
 [ -n "${DEVICE}" ] && LINUX_DEPENDS+=" ${PROJECT_DIR}/${PROJECT}/devices/${DEVICE}/linux ${PROJECT_DIR}/${PROJECT}/devices/${DEVICE}/patches/linux ${PROJECT_DIR}/${PROJECT}/devices/${DEVICE}/packages/linux"
 [ "${TARGET_ARCH}" = "x86_64" ] && LINUX_DEPENDS+=" ${ROOT}/packages/linux-firmware/intel-ucode ${ROOT}/packages/linux-firmware/kernel-firmware"
+
+
 
 # Need to point to your actual cc
 # If you have ccache installed, take care that LOCAL_CC does not point to it
@@ -67,6 +73,7 @@ LINUX_DEPENDS="${PROJECT_DIR}/${PROJECT}/linux ${PROJECT_DIR}/${PROJECT}/patches
 if [ -z "${LOCAL_CC}" ]; then
   die "***** Please install gcc *****" "127"
 fi
+
 
 # Need to point to your actual g++
 # If you have ccache installed, take care that LOCAL_CXX does not point to it
@@ -98,15 +105,22 @@ if [ -f "${HOME}/.coreelec/options" ]; then
   . "${HOME}/.coreelec/options"
 fi
 
+
+
 check_config
 
 . config/graphic
 . config/path $1
 
+
+
 ## package processing
 
+
+		
 # If the package caches are unset, then populate them
 init_package_cache
+
 
 if [ -z "${DEFAULT_PYTHON_VERSION+set}" ]; then
   export DEFAULT_PYTHON_VERSION="$(get_pkg_variable Python3 PKG_PYTHON_VERSION)"

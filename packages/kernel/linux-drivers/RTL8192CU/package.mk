@@ -13,6 +13,7 @@ PKG_NEED_UNPACK="${LINUX_DEPENDS}"
 PKG_LONGDESC="Realtek RTL81xxCU Linux 3.x driver"
 PKG_IS_KERNEL_PKG="yes"
 
+
 pre_make_target() {
   unset LDFLAGS
 }

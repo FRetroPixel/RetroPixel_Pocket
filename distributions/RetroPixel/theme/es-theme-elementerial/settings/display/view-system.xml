@@ -1,0 +1,126 @@
+<!--
+  Theme: Elementerial
+  Author: mluizvitor
+-->
+
+<theme>
+  <formatVersion>7</formatVersion>
+
+  <view name="system">
+    <!-- Cards position -->
+    <carousel name="systemcarousel">
+      <origin>0.5 0</origin>
+      <pos>0.5 0</pos>
+      <defaultTransition>fade</defaultTransition>
+      <systemInfoDelay>300</systemInfoDelay>
+
+      <logoSize>0.25 0.25</logoSize>      <!-- 480x320 / 120x 80y -->
+      <logoScale>1.4</logoScale>
+
+      <zIndex>10</zIndex>
+    </carousel>
+
+    <image name="background_overlay" extra="true">
+      <size>1 1</size>
+      <origin>0 0</origin>
+      <pos>0 0</pos>
+      <zIndex>-7</zIndex>
+    </image>
+
+    <!-- System Name -->
+    <text name="systemName" extra="true">
+      <text>${system.fullName}</text>
+      <origin>0 0</origin>
+      <size>0.866667 ${fontSizeH1-medium}</size>      <!-- 480x320 / 416x -->
+      <fontPath>${fontBold}</fontPath>
+
+      <fontSize>${fontSizeH1-medium}</fontSize>
+      <fontSize ifSubset="FontSize:large">${fontSizeH1-large}</fontSize>
+      <fontSize ifSubset="FontSize:small">${fontSizeH1-small}</fontSize>
+
+      <lineSpacing>1</lineSpacing>
+      <alignment>left</alignment>
+      <zIndex>15</zIndex>
+    </text>
+
+    <!-- Total games per system -->
+    <text name="systemInfo">
+      <origin>0 0</origin>
+      <size>0.866667 ${fontSizeBody-medium}</size>      <!-- 480x320 / 416x -->
+
+      <fontSize>${fontSizeBody-medium}</fontSize>
+      <fontSize ifSubset="FontSize:large">${fontSizeBody-large}</fontSize>
+      <fontSize ifSubset="FontSize:small">${fontSizeBody-small}</fontSize>
+
+      <alignment>left</alignment>
+      <forceUppercase>0</forceUppercase>
+      <fontPath>${fontRegular}</fontPath>
+      <lineSpacing>1</lineSpacing>
+      <zIndex>15</zIndex>
+    </text>
+
+    <!-- System Logo -->
+    <image name="logo">
+      <path>./assets/logos/${system.theme}.svg</path>
+    </image>
+
+    <!-- Logo Fallback -->
+    <text name="logoText">
+      <origin>0 0</origin>
+      <fontPath>${fontRegular}</fontPath>
+      <fontSize>${fontSizeBody-medium}</fontSize>
+      <fontSize ifSubset="FontSize:large">${fontSizeBody-large}</fontSize>
+      <fontSize ifSubset="FontSize:small">${fontSizeBody-small}</fontSize>
+    </text>
+
+    <!-- System Background -->
+    <image name="background" extra="true">
+      <path>./assets/background.png</path>
+      <size>1 1</size>
+      <origin>0 0</origin>
+      <pos>0 0</pos>
+      <tile>true</tile>
+      <zIndex>-50</zIndex>
+    </image>
+
+    <!-- System Background -->
+    <image name="cover" extra="true">
+      <size>1 0</size>
+      <origin>0 0.5</origin>
+      <pos>0 0.25</pos>
+      <zIndex>-9</zIndex>
+      <storyboard>
+        <animation property="opacity" from="0" to="1" begin="0" duration="1000" mode="easeOut" />
+      </storyboard>
+    </image>
+  </view>
+
+  <view name="system, basic, detailed, grid">
+    <image name="osdBackground" extra="true">
+      <pos>0 0</pos>
+      <origin>0 0</origin>
+      <size>1 1</size>
+      <zIndex>100</zIndex>
+    </image>
+  </view>
+
+  <view name="screen">
+    <text name="clock">
+      <origin>0 0.5</origin>
+      <fontSize>${fontSizeCaption-medium}</fontSize>
+      <fontSize ifSubset="Ratio:ratio53">${fontSizeBody-medium}</fontSize>
+
+      <fontPath>${fontRegular}</fontPath>
+      <lineSpacing>1</lineSpacing>
+      <alignment>right</alignment>
+    </text>
+
+    <controllerActivity name="controllerActivity">
+      <origin>0 0</origin>
+      <pos>0.016666 0.025</pos>
+      <size>0.025</size>
+      <itemSpacing>0.003</itemSpacing>
+      <imagePath>./assets/pin.svg</imagePath>
+    </controllerActivity>
+  </view>
+</theme>

@@ -11,6 +11,7 @@ export PULSE_RUNTIME_PATH=/run/pulse
 	echo "Set-Audio: Using audio device $RR_AUDIO_DEVICE"
     RR_PA_TSCHED="true"
     RR_AUDIO_VOLUME="100"
+   // RR_AUDIO_VOLUME="80"
     RR_AUDIO_BACKEND="PulseAudio"
 	
 
@@ -72,7 +73,8 @@ pulseaudio_sink_unload() {
 
     # Restore ALSA Master volume to 100%
     if [ ! -z "$(amixer | grep "'Master',0")" ] && [ ! $(amixer get Master | awk '$0~/%/{print $4}' | tr -d '[]%') = "100" ]; then
-      amixer -q set Master,0 100% unmute >/dev/null 2>&1
+      #amixer -q set Master,0 100% unmute >/dev/null 2>&1
+       amixer -q set Master,0 20% unmute >/dev/null 2>&1
       echo "Set-Audio: ALSA mixer restore volume to 100%"
     fi
   fi

@@ -4,8 +4,9 @@
 PKG_NAME="kernel-firmware"
 PKG_VERSION="20240410"
 PKG_LICENSE="other"
-PKG_SITE="https://git.kernel.org/pub/scm/linux/kernel/git/firmware/linux-firmware.git/"
-PKG_URL="https://git.kernel.org/pub/scm/linux/kernel/git/firmware/linux-firmware.git/snapshot/${PKG_VERSION}.tar.gz"
+PKG_SITE="file://${OLDPWD}/extpackage/kernel-firmware/kernel-firmware-20240410.tar.gz"
+PKG_URL="${PKG_SITE}"
+
 PKG_NEED_UNPACK="${PROJECT_DIR}/${PROJECT}/packages/${PKG_NAME} ${PROJECT_DIR}/${PROJECT}/devices/${DEVICE}/packages/${PKG_NAME}"
 PKG_LONGDESC="kernel-firmware: kernel related firmware"
 PKG_TOOLCHAIN="manual"

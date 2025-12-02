@@ -1,0 +1,82 @@
+<!--
+  Theme: Albedo
+  Author: mluizvitor
+-->
+
+<theme>
+  <formatVersion>7</formatVersion>
+
+  <variables>
+    <string.settings.yes>Yes</string.settings.yes>
+    <string.settings.no>No</string.settings.no>
+
+    <!-- Settings Titles -->
+    <string.settings.colorSchemeTitle>Accent color</string.settings.colorSchemeTitle>
+    <string.settings.screenRatio>Screen ratio</string.settings.screenRatio>
+    <string.settings.statusBar>Status bar</string.settings.statusBar>
+    <string.settings.dateFormat>Date format</string.settings.dateFormat>
+
+    <string.settings.fontSize>Font size</string.settings.fontSize>
+    <string.settings.fontSize.medium>Medium</string.settings.fontSize.medium>
+    <string.settings.fontSize.small>Small</string.settings.fontSize.small>
+    <string.settings.fontSize.large>Large</string.settings.fontSize.large>
+
+    <string.settings.backgroundStyle>Background overlay</string.settings.backgroundStyle>
+    <string.settings.backgroundStyle.scanlines>Scanlines</string.settings.backgroundStyle.scanlines>
+    <string.settings.backgroundStyle.clean>Clean</string.settings.backgroundStyle.clean>
+
+    <string.settings.logoStyle>Logos style</string.settings.logoStyle>
+    <string.settings.logoStyle.color>Colored</string.settings.logoStyle.color>
+    <string.settings.logoStyle.mono>Monochrome</string.settings.logoStyle.mono>
+
+    <string.settings.clock>Clock</string.settings.clock>
+    <string.settings.battery>Battery</string.settings.battery>
+    <string.settings.hidden>Hidden</string.settings.hidden>
+
+    <string.settings.backgroundEntry>Background Source</string.settings.backgroundEntry>
+    <string.settings.backgroundEntry.defaultBg>Defined by theme</string.settings.backgroundEntry.defaultBg>
+    <string.settings.backgroundEntry.customBg>Custom</string.settings.backgroundEntry.customBg>
+    <string.settings.backgroundEntry.videoBg>Random Video</string.settings.backgroundEntry.videoBg>
+    <string.settings.backgroundEntry.randomBg>Random Screenshot</string.settings.backgroundEntry.randomBg>
+
+    <string.settings.gamelistBackgroundStyle>Game list background</string.settings.gamelistBackgroundStyle>
+    <string.settings.gamelistBackgroundStyle.blurred>Blurred</string.settings.gamelistBackgroundStyle.blurred>
+    <string.settings.gamelistBackgroundStyle.normal>Normal</string.settings.gamelistBackgroundStyle.normal>
+    <string.settings.gamelistBackgroundStyle.none>No background</string.settings.gamelistBackgroundStyle.none>
+
+    <!-- Colors -->
+    <string.settings.color.blue>Blue</string.settings.color.blue>
+    <string.settings.color.purple>Purple</string.settings.color.purple>
+    <string.settings.color.pink>Pink</string.settings.color.pink>
+    <string.settings.color.red>Red</string.settings.color.red>
+    <string.settings.color.orange>Orange</string.settings.color.orange>
+    <string.settings.color.yellow>Yellow</string.settings.color.yellow>
+    <string.settings.color.green>Green</string.settings.color.green>
+    <string.settings.color.teal>Teal</string.settings.color.teal>
+    <string.settings.color.gray>Gray</string.settings.color.gray>
+    <string.settings.color.beige>Beige</string.settings.color.beige>
+
+    <!-- Interface Texts -->
+    <string.view.detailed.description>Description</string.view.detailed.description>
+
+    <!-- Grid Icon Aspect -->
+    <string.settings.gridIconRatio>Default icons aspect ratio</string.settings.gridIconRatio>
+    <string.settings.gridIconRatio.square>Square</string.settings.gridIconRatio.square>
+    <string.settings.gridIconRatio.tip>Applies to folder and cartridge icons (Don't select this one)</string.settings.gridIconRatio.tip>
+
+    <string.settings.imageSource>Image for grid item</string.settings.imageSource>
+    <string.settings.videoSource>Video Snapshot</string.settings.videoSource>
+
+    <string.imageSource.thumbnail>Box Art</string.imageSource.thumbnail>
+    <string.imageSource.image>Screenshot</string.imageSource.image>
+    <string.imageSource.marquee>Game Logo</string.imageSource.marquee>
+
+    <string.gridImageStyle>Grid image style</string.gridImageStyle>
+    <string.gridImageStyle.cover>Cover</string.gridImageStyle.cover>
+    <string.gridImageStyle.fit>Fit</string.gridImageStyle.fit>
+    <string.gridImageStyle.stretch>Stretch</string.gridImageStyle.stretch>
+
+    <string.default>Default</string.default>
+  </variables>
+
+</theme>

@@ -5,9 +5,14 @@
 PKG_NAME="initramfs"
 PKG_VERSION=""
 PKG_LICENSE="GPL"
-PKG_SITE="http://www.openelec.tv"
-PKG_URL=""
+#PKG_SITE="http://www.openelec.tv"
+#PKG_URL=""
+
+PKG_SITE="file://${OLDPWD}/extpackage/initramfs"
+PKG_URL="${PKG_SITE}"
+
 PKG_DEPENDS_TARGET="toolchain libc:init busybox:init linux:init plymouth-lite:init util-linux:init e2fsprogs:init dosfstools:init exfat:init fakeroot:host terminus-font:init"
+#PKG_DEPENDS_TARGET="toolchain libc:init busybox:init linux:init util-linux:init e2fsprogs:init dosfstools:init exfat:init fakeroot:host terminus-font:init"
 PKG_SECTION="virtual"
 PKG_LONGDESC="debug is a Metapackage for installing initramfs"
 
@@ -30,7 +35,10 @@ post_install() {
     ln -sfn /usr/lib ${BUILD}/initramfs/lib
     ln -sfn /usr/bin ${BUILD}/initramfs/bin
     ln -sfn /usr/sbin ${BUILD}/initramfs/sbin
-
+	
+	#cp /home/li/桌面/Program/AmberELEC-ServerProgram/BackgroundService.sh ${BUILD}/initramfs/etc
+	#chmod 777 ${BUILD}/initramfs/etc/BackgroundService.sh
+	
     mkdir -p ${BUILD}/image/
     fakeroot -- sh -c \
       "mkdir -p dev; mknod -m 600 dev/console c 5 1; find . | cpio -H newc -ov -R 0:0 > ${BUILD}/image/initramfs.cpio"

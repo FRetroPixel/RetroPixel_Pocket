@@ -4,8 +4,11 @@
 PKG_NAME="duckstation"
 PKG_VERSION="573c8370d75d38e922fa7b9f99d9c87c1f913c5d"
 PKG_LICENSE="GPLv3"
-PKG_SITE="https://github.com/stenzek/duckstation"
-PKG_URL="${PKG_SITE}.git"
+#PKG_SITE="https://github.com/stenzek/duckstation"
+#PKG_URL="${PKG_SITE}.git"
+
+PKG_SITE="file://${OLDPWD}/extpackage/duckstation-573c8370d75d38e922fa7b9f99d9c87c1f913c5d"
+PKG_URL="${PKG_SITE}"
 PKG_DEPENDS_TARGET="toolchain nasm:host pulseaudio openssl curl libidn2 nghttp2 zlib SDL2 libevdev"
 PKG_LONGDESC="Fast PlayStation 1 emulator for x86-64/AArch32/AArch64"
 PKG_TOOLCHAIN="cmake-make"

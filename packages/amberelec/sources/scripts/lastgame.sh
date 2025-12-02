@@ -102,12 +102,13 @@ power_proc () {
                     $(/usr/bin/retroarch --command QUIT > /dev/null 2>&1 && /usr/bin/retroarch --command QUIT > /dev/null 2>&1)
                     sleep 0.5
                     $(/usr/bin/sync)
-                    $(systemctl poweroff)
+                   $(systemctl poweroff)
                 fi
             elif ! pgrep -f "sh -c --" >/dev/null; then
                 $(/usr/bin/show_splash.sh)
                 $(/usr/bin/sync)
                 $(systemctl poweroff)
+            echo " poweroff"
             fi
         fi
     done
@@ -119,7 +120,7 @@ hotkey_proc () {
             ($hotkey_press)
                 pid_file="/var/run/power_proc.pid"
                 if [ -f "$pid_file" ]; then
-                    kill "$(cat "$pid_file")" >/dev/null 2>&1
+                   kill "$(cat "$pid_file")" >/dev/null 2>&1
                     rm "$pid_file"
                 fi
                 power_proc &
@@ -133,8 +134,9 @@ hotkey_proc () {
         if test -f /tmp/lastGame; then
             rm -rf /tmp/lastGame
             power_proc "now"
+            echo " killpoweroff"
         fi
     done
 }
 
-hotkey_proc
+#hotkey_proc

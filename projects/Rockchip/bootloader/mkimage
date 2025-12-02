@@ -17,7 +17,18 @@ fi
 if [ -f "$RELEASE_DIR/3rdparty/bootloader/boot.ini" ]; then
   cp "$RELEASE_DIR/3rdparty/bootloader/boot.ini" "${LE_TMP}/boot.ini"
 fi
-
+if [ -f "$RELEASE_DIR/3rdparty/bootloader/logo.bmp" ]; then
+#dd if="$RELEASE_DIR/3rdparty/bootloader/logo.bmp" of="$DISK" bs=64k seek=384 conv=fsync,notrunc >"$SAVE_ERROR" 2>&1 || show_error
+  cp "$RELEASE_DIR/3rdparty/bootloader/logo.bmp" "${LE_TMP}/logo.bmp"
+  cp "$RELEASE_DIR/3rdparty/bootloader/battery_0.bmp" "${LE_TMP}/battery_0.bmp"
+  cp "$RELEASE_DIR/3rdparty/bootloader/battery_1.bmp" "${LE_TMP}/battery_1.bmp"
+  cp "$RELEASE_DIR/3rdparty/bootloader/battery_2.bmp" "${LE_TMP}/battery_2.bmp"
+  cp "$RELEASE_DIR/3rdparty/bootloader/battery_3.bmp" "${LE_TMP}/battery_3.bmp"
+  cp "$RELEASE_DIR/3rdparty/bootloader/battery_fail.bmp" "${LE_TMP}/battery_fail.bmp"
+#cp "$RELEASE_DIR/3rdparty/bootloader/logo.bmp" "${LE_TMP}/splash"
+   echo "image: burn logo.bmp to image..."
+    echo "$LE_TMP"
+fi
 mkdir -p "${LE_TMP}/extlinux"
 
 # copy device trees to part1
@@ -34,3 +45,15 @@ EOF
 done
  mcopy -so "${LE_TMP}/boot.ini" ::
  mcopy -so "${LE_TMP}/extlinux" ::
+ 
+ mcopy -so "${LE_TMP}/logo.bmp" ::
+  mcopy -so "${LE_TMP}/battery_0.bmp" ::
+  mcopy -so "${LE_TMP}/battery_1.bmp" ::
+  mcopy -so "${LE_TMP}/battery_2.bmp" ::
+  mcopy -so "${LE_TMP}/battery_3.bmp" ::
+  mcopy -so "${LE_TMP}/battery_fail.bmp" ::
+
+   echo "$DISK"
+    echo "$PWD"
+ 
+   
